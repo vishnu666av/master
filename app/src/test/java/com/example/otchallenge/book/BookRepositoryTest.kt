@@ -29,7 +29,7 @@ class BookRepositoryTest {
             Response.success(mockResponse)
         )
 
-        val result = bookRepository.getBooks()
+        val result = bookRepository.getBooks(offset = 0)
 
         assertTrue(result is ApiResult.Success && result.data == mockResponse)
     }
@@ -44,7 +44,7 @@ class BookRepositoryTest {
             Response.error(errorCode, errorMessage.errorResponseBody())
         )
 
-        val result = bookRepository.getBooks()
+        val result = bookRepository.getBooks(offset = 0)
 
         assertTrue(result is ApiResult.Error && result.message == errorMessage)
     }
