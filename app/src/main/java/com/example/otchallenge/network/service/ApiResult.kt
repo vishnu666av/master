@@ -15,8 +15,8 @@ sealed class ApiResult<T> {
     companion object {
         /**
          * Creates an [ApiResult] instance from a Retrofit [Response].
-         * If the response is successful, wraps the body in [OnSuccess].
-         * If the response is not successful, wraps the error message in [OnFailure].
+         * If the response is successful, wraps the body in [Success].
+         * If the response is not successful, wraps the error message in [Error].
          *
          * @param response The Retrofit [Response] from a network call.
          * @return An [ApiResult] representing the outcome of the network call.

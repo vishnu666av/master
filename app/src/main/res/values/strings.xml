@@ -3,6 +3,4 @@
     <string name="try_again">Try Again</string>
     <string name="error_title">No Books Found</string>
     <string name="error_message">It looks like there are no books in the catalog yet</string>
-    <string name="no_network_connection">No network connection</string>
-    <string name="no_network_connection_last_connected">No Internet Connection</string>
 </resources>
