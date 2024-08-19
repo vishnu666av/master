@@ -21,17 +21,29 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField "String", "API_KEY", "\"KoRB4K5LRHygfjCL2AH6iQ7NeUqDAGAB\""
+            buildConfigField "String", "BASE_URL", "\"https://api.nytimes.com\""
+        }
         release {
+            buildConfigField "String", "API_KEY", "KoRB4K5LRHygfjCL2AH6iQ7NeUqDAGAB"
+            buildConfigField "String", "BASE_URL", "https://api.nytimes.com"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 }
 
@@ -50,6 +62,11 @@ dependencies {
     implementation libs.retrofit
     implementation libs.retrofit.rx.adapter
 
+    // moshi
+    implementation(libs.retrofit.converter.moshi)
+    implementation(libs.moshi.kotlin)
+    ksp(libs.moshi.kotlin.codegen)
+
     //glide
     implementation libs.glide
 
@@ -57,6 +74,12 @@ dependencies {
     implementation libs.rx.android
     implementation libs.rx.java
     implementation libs.rx.kotlin
+
+
+    //Mockito
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.inline)
+    testImplementation(libs.mockito.kotlin)
 
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit
