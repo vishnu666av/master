@@ -34,4 +34,13 @@ data class BooksItem(
 
     @Json(name = "rank")
     val rank: Int? = null,
+
+    @Json(name = "contributor")
+    val contributor: String? = null,
+
+    @Json(name = "publisher")
+    val publisher: String? = null,
+
+    @Json(name = "weeks_on_list")
+    val weeksOnList: Int? = null,
 )
