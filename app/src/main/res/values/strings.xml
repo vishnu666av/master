@@ -1,3 +1,4 @@
 <resources>
 	<string name="app_name">AndroidOTChallenge</string>
+	<string name="opps_message">Opps, something went wrong</string>
 </resources>
