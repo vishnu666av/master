@@ -10,10 +10,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import com.example.otchallenge.ui.main.BookListScreen
 import com.example.otchallenge.ui.theme.OTCBookTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        (application as MyApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {

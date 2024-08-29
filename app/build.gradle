@@ -1,8 +1,10 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    alias(libs.plugins.kapt)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hilt)
     alias(libs.plugins.compose.compiler)
+    id("kotlinx-serialization")
 }
 
 android {
@@ -50,16 +52,21 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
 
-    // dagger
-    implementation libs.dagger
-    kapt libs.dagger.compiler
+    // dagger (hilt)
+    implementation(libs.hilt.core)
+    implementation(libs.hilt.android)
+    implementation(libs.hilt.navigation.compose)
+    ksp(libs.hilt.compiler)
 
     //retrofit
     implementation libs.retrofit
     implementation libs.retrofit.rx.adapter
+    implementation(libs.okhttp.logging)
+    implementation(libs.retrofit.kotlin.serialization)
+    implementation(libs.kotlinx.serialization.json)
 
     //glide
-    implementation libs.glide
+    implementation libs.glideCompose
 
     //reactive x
     implementation libs.rx.android
