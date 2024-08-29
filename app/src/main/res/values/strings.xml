@@ -1,5 +1,8 @@
 <resources>
-	<string name="app_name">AndroidOTChallenge</string>
-	<string name="text_empty_list_state">There are no books available</string>
-
+    <string name="app_name">AndroidOTChallenge</string>
+    <string name="text_empty_list_state">There are no books available</string>
+    <string name="text_empty_loading_failed_state">Oops! We ran into a problem</string>
+    <string name="label_author">By: %s</string>
+    <string name="label_image_thumbnail_description">Image Thumbnail</string>
+    <string name="label_image_placeholder">No Image Available</string>
 </resources>
