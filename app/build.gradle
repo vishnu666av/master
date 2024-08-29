@@ -61,6 +61,7 @@ dependencies {
     implementation libs.androidx.material3
     implementation libs.androidx.ui.tooling.preview
     debugImplementation libs.androidx.ui.tooling
+    implementation libs.androidx.activity.compose
 
     // dagger
     implementation libs.dagger
@@ -69,6 +70,7 @@ dependencies {
     // hilt
     implementation libs.hilt.android
     kapt libs.hilt.compiler
+    implementation libs.androidx.lifecycle.viewmodel.compose
 
     //retrofit
     implementation libs.retrofit

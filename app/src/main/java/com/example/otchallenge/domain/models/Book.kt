@@ -1,9 +1,9 @@
 package com.example.otchallenge.domain.models
 
 import com.example.otchallenge.data.network.models.NetBook
-import kotlinx.serialization.SerialName
 
 data class Book(
+    val primaryIsbn10: String,
     val rank: Int,
     val title: String,
     val description: String,
@@ -11,6 +11,7 @@ data class Book(
 )
 
 fun NetBook.toBook(): Book = Book(
+    primaryIsbn10 = primaryIsbn10,
     rank = rank,
     title = title,
     description = description,

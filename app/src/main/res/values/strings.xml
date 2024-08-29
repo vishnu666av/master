@@ -1,3 +1,4 @@
 <resources>
 	<string name="app_name">AndroidOTChallenge</string>
+    <string name="top_books">Top books</string>
 </resources>
