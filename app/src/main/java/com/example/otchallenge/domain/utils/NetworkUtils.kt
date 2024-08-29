@@ -1,6 +1,7 @@
 package com.example.otchallenge.domain.utils
 
 import com.example.otchallenge.domain.errors.AppError
+import kotlinx.coroutines.CancellationException
 import retrofit2.Response
 
 
@@ -18,7 +19,11 @@ inline fun <T> secureNetworkRequest(networkRequest: () -> Response<T>): Result<T
             )
         )
     }
-} catch (exception: Exception) {
+} catch (exception: IllegalStateException) {
+    // Rethrow cancellation exceptions to continue coroutine cancellation chain
+    if(exception is CancellationException) {
+        throw exception
+    }
     Result.failure(AppError.Network(exception.message, cause = exception))
 }
 

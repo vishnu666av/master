@@ -37,7 +37,6 @@ fun BookListContent(
                 BookListComponent(bookList = list)
             }
             result.onFailure {
-                Log.d("BookListContent", it.message, it)
                 RecoverableError(
                     title = { Text(text = stringResource(R.string.book_list_error_title)) },
                     message = {
