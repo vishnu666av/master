@@ -6,7 +6,6 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class NetList(
     val status: String,
-    val copyright: String,
     @SerialName("num_results") val numResults: Int,
     @SerialName("last_modified") val lastModified: String,
     val results: NetResults
