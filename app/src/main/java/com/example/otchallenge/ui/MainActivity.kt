@@ -14,7 +14,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.core.view.WindowCompat
-import com.example.compose.AppTheme
+import com.example.otchallenge.ui.theme.AppTheme
 import com.example.otchallenge.R
 import com.example.otchallenge.domain.repository.BooksRepository
 import com.example.otchallenge.ui.booklist.BookListContent
@@ -23,9 +23,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
-    @Inject
-    lateinit var bookLisRepository: BooksRepository
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,7 +45,6 @@ class MainActivity : ComponentActivity() {
                     BookListContent(
                         modifier = Modifier.padding(it)
                     )
-
                 }
             }
         }

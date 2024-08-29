@@ -1,4 +1,4 @@
-package com.example.compose
+package com.example.otchallenge.ui.theme
 import androidx.compose.ui.graphics.Color
 
 val primaryLight = Color(0xFF3B608F)

@@ -20,9 +20,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.placeholder
-import com.example.compose.AppTheme
 import com.example.otchallenge.R
 import com.example.otchallenge.domain.models.Book
+import com.example.otchallenge.ui.corecomponents.RemoteImage
+import com.example.otchallenge.ui.theme.AppTheme
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
