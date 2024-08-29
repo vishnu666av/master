@@ -1,4 +1,8 @@
 <resources>
 	<string name="app_name">AndroidOTChallenge</string>
     <string name="top_books">Top books</string>
+    <string name="recoverable_error_retry">Retry</string>
+    <string name="http_error_message">Our systems failed, please try again.</string>
+    <string name="network_error_message">Something went wrong, check your connection and try again.</string>
+    <string name="book_list_error_title">There was an error fetching the books</string>
 </resources>

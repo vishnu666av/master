@@ -17,7 +17,7 @@ import androidx.core.view.WindowCompat
 import com.example.compose.AppTheme
 import com.example.otchallenge.R
 import com.example.otchallenge.domain.repository.BooksRepository
-import com.example.otchallenge.ui.booklist.BookListComponent
+import com.example.otchallenge.ui.booklist.BookListContent
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -38,13 +38,14 @@ class MainActivity : ComponentActivity() {
                         TopAppBar(
                             title = { Text(text = stringResource(R.string.top_books)) },
                             colors = TopAppBarDefaults.topAppBarColors(
-                                containerColor = MaterialTheme.colorScheme.primaryContainer
+                                containerColor = MaterialTheme.colorScheme.primary,
+                                titleContentColor = MaterialTheme.colorScheme.onPrimary
                             )
                         )
                     },
                     modifier = Modifier.systemBarsPadding()
                 ) {
-                    BookListComponent(
+                    BookListContent(
                         modifier = Modifier.padding(it)
                     )
 
