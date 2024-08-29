@@ -1,15 +1,15 @@
-package com.example.otchallenge
+package com.example.otchallenge.ui
 
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
+import com.example.otchallenge.R
 import com.example.otchallenge.data.network.BooksApi
-import dagger.hilt.EntryPoint
+import com.example.otchallenge.domain.repository.BooksRepository
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -18,7 +18,7 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
 
 	@Inject
-	lateinit var  booksApi: BooksApi
+	lateinit var  bookLisRepository: BooksRepository
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
 		}
 
 		lifecycleScope.launch {
-			val list = booksApi.fetchCurrentList().body()
+			val list = bookLisRepository.fetchDefaultList()
 			Log.d("MainActivity", "List: $list")
 		}
 	}
