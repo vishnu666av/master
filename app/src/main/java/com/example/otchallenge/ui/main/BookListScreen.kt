@@ -18,6 +18,8 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,7 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.LifecycleStartEffect
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideSubcomposition
 import com.bumptech.glide.integration.compose.RequestState
@@ -37,9 +39,28 @@ import com.example.otchallenge.data.models.Book
 import com.example.otchallenge.ui.theme.Typography
 
 @Composable
-fun BookListScreen(modifier: Modifier) {
-    val viewModel: BookListViewModel = hiltViewModel()
-    val resultState = viewModel.resultState.collectAsState().value
+fun BookListScreen(
+    presenter: BookListContract.BookListPresenter,
+    view: BookListContract.BookListView,
+    modifier: Modifier,
+) {
+    val (page, setPage) =
+        remember {
+            mutableIntStateOf(0)
+        }
+
+
+    LifecycleStartEffect(Unit) {
+        presenter.attachView(view)
+
+        presenter.fetchBooks(page)
+
+        onStopOrDispose {
+            presenter.detachView()
+        }
+    }
+    val resultState = view.uiState.collectAsState().value
+
     BookListContent(resultState, modifier)
 }
 
