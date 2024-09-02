@@ -1,6 +1,6 @@
 package com.example.otchallenge.ui.main
 
-import com.example.otchallenge.data.network.BookDataSource
+import com.example.otchallenge.data.repository.BookRepository
 import com.example.otchallenge.di.AppDispatchers
 import com.example.otchallenge.di.ApplicationScope
 import com.example.otchallenge.di.Dispatcher
@@ -18,6 +18,7 @@ import javax.inject.Inject
 class BookListPresenter
     @Inject
     constructor(
+        private val repository: BookRepository,
         @Dispatcher(AppDispatchers.IO) private val ioDispatcher: CoroutineDispatcher,
         @ApplicationScope private val appScope: CoroutineScope,
     ) : BookListContract.BookListPresenter {
@@ -25,8 +26,8 @@ class BookListPresenter
 
         override fun fetchBooks(page: Int) {
             appScope.launch {
-                BookDataSource()
-                    .fetchBooks()
+                repository
+                    .fetchBooks(page)
                     .map {
                         _view?.onLoadBooks(it)
                     }.flowOn(ioDispatcher)

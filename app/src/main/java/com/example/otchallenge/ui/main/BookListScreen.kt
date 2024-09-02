@@ -12,7 +12,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
@@ -49,16 +51,15 @@ fun BookListScreen(
             mutableIntStateOf(0)
         }
 
-
     LifecycleStartEffect(Unit) {
         presenter.attachView(view)
-
-        presenter.fetchBooks(page)
 
         onStopOrDispose {
             presenter.detachView()
         }
     }
+
+    presenter.fetchBooks(page)
     val resultState = view.uiState.collectAsState().value
 
     BookListContent(resultState, modifier)
@@ -69,27 +70,33 @@ internal fun BookListContent(
     resultState: ListResultUiState,
     modifier: Modifier = Modifier,
 ) {
-    LazyColumn(
-        modifier.fillMaxSize().padding(16.dp),
+    Column(
+        modifier
+            .fillMaxSize()
+            .padding(16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         when (resultState) {
-            ListResultUiState.ErrorOccurred ->
-                item {
-                    ErrorState()
-                }
+            ListResultUiState.ErrorOccurred -> ErrorState()
 
-            ListResultUiState.Loading -> item { LoadingState() }
+            ListResultUiState.Loading -> LoadingState()
             is ListResultUiState.Success -> {
                 if (resultState.isEmpty()) {
-                    item { EmptyListState() }
+                    EmptyListState()
                 } else {
-                    items(resultState.items) {
-                        BookListItem(it)
-                    }
+                    AdaptiveGrid(books = resultState.items)
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun AdaptiveGrid(books: List<Book>) {
+    LazyVerticalGrid(columns = GridCells.FixedSize(400.dp)) {
+        items(books) { book ->
+            BookListItem(book)
         }
     }
 }

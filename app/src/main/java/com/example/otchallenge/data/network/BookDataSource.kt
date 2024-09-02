@@ -55,5 +55,9 @@ class BookDataSource {
             ).build()
             .create(BookApi::class.java)
 
-     fun fetchBooks(): Flow<List<Book>> = flow { emit(bookApi.getBooks(0).results.books) }
+    fun fetchBooks(page: Int): Flow<List<Book>> =
+        flow {
+            val offset = page * 20 // offset (from the api documentation) is in multiples of 20
+            emit(bookApi.getBooks(offset).results.books)
+        }
 }
