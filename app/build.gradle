@@ -45,7 +45,9 @@ android {
     testOptions {
         unitTests.returnDefaultValues = true
     }
-
+    buildFeatures {
+        viewBinding true
+    }
 
     android.buildFeatures.buildConfig true
 }

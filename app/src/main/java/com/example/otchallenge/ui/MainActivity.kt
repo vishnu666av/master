@@ -14,12 +14,10 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.core.view.WindowCompat
-import com.example.otchallenge.ui.theme.AppTheme
 import com.example.otchallenge.R
-import com.example.otchallenge.domain.repository.BooksRepository
 import com.example.otchallenge.ui.booklist.BookListContent
+import com.example.otchallenge.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
