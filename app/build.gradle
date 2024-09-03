@@ -31,6 +31,11 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    buildFeatures {
+        buildConfig = true
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -40,6 +45,10 @@ dependencies {
     implementation libs.material
     implementation libs.androidx.activity
     implementation libs.androidx.constraintlayout
+    //room
+    implementation(libs.androidx.room.ktx)
+    kapt(libs.room.compiler)
+
     // dagger
     implementation libs.dagger
     kapt libs.dagger.compiler
