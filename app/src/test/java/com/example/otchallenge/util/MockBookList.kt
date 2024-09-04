@@ -19,8 +19,3 @@ fun mockBookDomainList(): List<Book> {
         ),
         )
 }
-
-fun mockBookDtoList(): List<BookDto> {
-    return listOf(
-    )
-}

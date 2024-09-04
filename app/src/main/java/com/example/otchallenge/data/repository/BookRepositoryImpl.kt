@@ -2,13 +2,13 @@ package com.example.otchallenge.data.repository
 
 import androidx.core.net.toUri
 import com.example.otchallenge.BuildConfig
-import com.example.otchallenge.data.local.entity.BookEntity
-import com.example.otchallenge.data.remote.BookApi
 import com.example.otchallenge.common.util.ConnectivityProvider
+import com.example.otchallenge.data.local.entity.BookEntity
 import com.example.otchallenge.data.local.room.BookDao
+import com.example.otchallenge.data.remote.BookApi
+import com.example.otchallenge.data.remote.dto.BookDto
 import com.example.otchallenge.domain.model.Book
 import com.example.otchallenge.domain.repository.BookRepository
-import com.example.otchallenge.data.remote.dto.BookDto
 import javax.inject.Inject
 
 class BookRepositoryImpl @Inject constructor(
@@ -26,7 +26,7 @@ class BookRepositoryImpl @Inject constructor(
             return databaseClips.map { it.toDomain() }
         } else {
             val dbClips = dao.getBooks()
-            return dbClips.map {  it.toDomain() }
+            return dbClips.map { it.toDomain() }
         }
 
     }

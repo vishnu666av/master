@@ -21,8 +21,8 @@
 
         <ImageView
             android:id="@+id/imgBook"
-            android:layout_width="100dp"
-            android:layout_height="150dp"
+            android:layout_width="@dimen/book_image_width"
+            android:layout_height="@dimen/book_image_height"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
