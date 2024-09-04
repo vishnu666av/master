@@ -16,6 +16,7 @@ rx-android = "2.1.1"
 rx-java = "2.2.21"
 rx-kotlin = "2.4.0"
 room = "2.6.1"
+converterGson = "2.10.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -36,6 +37,7 @@ rx-android = {group = "io.reactivex.rxjava2", name="rxandroid", version.ref = "r
 rx-kotlin = {group = "io.reactivex.rxjava2", name="rxkotlin", version.ref = "rx-kotlin"}
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+converterGson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "converterGson" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

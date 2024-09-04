@@ -18,20 +18,55 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+    flavorDimensions += "environment"
+
+    productFlavors {
+        create("dev") {
+            dimension = "environment"
+            applicationIdSuffix = ".dev"
+            versionNameSuffix = "-dev"
+            buildConfigField("String", "BASE_URL", "\"https://api.nytimes.com\"")
+            buildConfigField("String", "API_KEY", project.property("API_KEY_DEV") as String)
+            resValue("string", "app_name", "OTAssignment-Dev")
+        }
+        create("staging") {
+            dimension = "environment"
+            applicationIdSuffix = ".staging"
+            versionNameSuffix = "-staging"
+            buildConfigField("String", "BASE_URL", "\"https://api.nytimes.com\"")
+            buildConfigField("String", "API_KEY", project.property("API_KEY_STAGING") as String)
+            resValue("string", "app_name", "OTAssignment-Staging")
+        }
+        create("production") {
+            dimension = "environment"
+            buildConfigField("String", "BASE_URL", "\"https://api.nytimes.com\"")
+            buildConfigField("String", "API_KEY", project.property("API_KEY_PROD") as String)
+            resValue("string", "app_name", "OTAssignment")
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = '1.8'
+
+    buildTypes {
+        getByName("debug") {
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-debug"
+//            isDebuggable = true
+        }
+        getByName("release") {
+         //   isMinifyEnabled = true
+            proguardFiles(
+                    getDefaultProguardFile("proguard-android-optimize.txt"),
+                    "proguard-rules.pro"
+            )
+        }
     }
 
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
     buildFeatures {
         buildConfig = true
         viewBinding = true
@@ -45,6 +80,9 @@ dependencies {
     implementation libs.material
     implementation libs.androidx.activity
     implementation libs.androidx.constraintlayout
+    //gson
+    implementation(libs.converterGson)
+
     //room
     implementation(libs.androidx.room.ktx)
     kapt(libs.room.compiler)
