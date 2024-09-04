@@ -14,6 +14,6 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideBookRepository(newsApi: BookApi, dao: BookDao, connectivityProvider: ConnectivityProvider): BookRepository =
-        BookRepositoryImpl(newsApi, dao, connectivityProvider)
+    fun provideBookRepository(booksApi: BookApi, dao: BookDao, connectivityProvider: ConnectivityProvider): BookRepository =
+        BookRepositoryImpl(booksApi, dao, connectivityProvider)
 }

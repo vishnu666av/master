@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.otchallenge.R
 import com.example.otchallenge.common.adapter.DelegateAdapter
 import com.example.otchallenge.common.adapter.ItemModel
 import com.example.otchallenge.databinding.ItemBookBinding
@@ -27,9 +28,14 @@ class BookDelegateAdapter : DelegateAdapter<BookDelegateAdapter.BookViewHolder, 
 
         fun bind(item: ItemModel) {
             val book = item as BookItemModel
-            Glide.with(binding.imageView)
+            binding.tvRank.text =  String.format(binding.tvRank.resources.getString(R.string.rank), book.rank)
+            binding.tvAuthor.text = book.author
+            binding.tvPublisher.text = book.publisher
+            binding.tvTitle.text = book.title
+            binding.tvDesc.text = book.description
+            Glide.with(binding.imgBook)
                 .load(book.imageUrl)
-                .into(binding.imageView)
+                .into(binding.imgBook)
 
         }
     }

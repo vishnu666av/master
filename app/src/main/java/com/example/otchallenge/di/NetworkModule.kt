@@ -22,7 +22,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideNewsApi(retrofit: Retrofit): BookApi {
+    fun provideBookApi(retrofit: Retrofit): BookApi {
         return retrofit.create(BookApi::class.java)
     }
 }

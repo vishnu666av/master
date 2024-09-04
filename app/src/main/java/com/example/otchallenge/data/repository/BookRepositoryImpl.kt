@@ -49,6 +49,9 @@ class BookRepositoryImpl @Inject constructor(
     )
 
     private fun BookEntity.toDomain() = Book(
+        author = author,
+        publisher = publisher,
+        rank = rank,
         title = title,
         imageUrl = bookImage,
         description = description

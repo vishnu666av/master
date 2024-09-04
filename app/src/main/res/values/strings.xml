@@ -2,4 +2,8 @@
 	<string name="app_name">AndroidOTChallenge</string>
 	<!-- Strings used for fragments for navigation -->
 	<string name="fragment_book_label">Books</string>
+	<string name="error_msg">Something went wrong. Please try again.</string>
+	<string name="try_again_btn">Try Again</string>
+	<string name="network_error">Please check your network and try again.</string>
+	<string name="rank">#%1$d</string>
 </resources>

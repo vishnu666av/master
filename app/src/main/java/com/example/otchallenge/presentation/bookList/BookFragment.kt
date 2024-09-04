@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.otchallenge.MyApplication
+import com.example.otchallenge.R
 import com.example.otchallenge.common.adapter.DelegationAdapter
+import com.example.otchallenge.common.util.ConnectivityProvider
 import com.example.otchallenge.databinding.FragmentBookBinding
 import com.example.otchallenge.presentation.bookList.model.BookItemModel
 import javax.inject.Inject
@@ -17,9 +19,11 @@ import javax.inject.Inject
  */
 class BookFragment : Fragment(), BookListContract.View {
 
-
     @Inject
     lateinit var presenter: BookListContract.Presenter
+
+    @Inject
+    lateinit var networkProvider: ConnectivityProvider
 
     private lateinit var adapter: DelegationAdapter
 
@@ -50,6 +54,11 @@ class BookFragment : Fragment(), BookListContract.View {
         presenter.attachView(this)
         presenter.loadBooks()
         setupRecyclerView()
+
+        binding.bookViewState.btnTryAgain.setOnClickListener {
+            binding.bookViewState.rootView.visibility = View.GONE
+            presenter.loadBooks()
+        }
     }
 
     private fun setupRecyclerView() {
@@ -69,18 +78,23 @@ class BookFragment : Fragment(), BookListContract.View {
     }
 
     override fun showBooks(books: List<BookItemModel>) {
-        adapter.setItems(books)
+        if(books.isEmpty() && !networkProvider.isNetworkAvailable()) {
+            showError(getString(R.string.network_error))
+        } else {
+            adapter.setItems(books)
+        }
     }
 
     override fun showLoading() {
-
+        binding.progressBar.visibility = View.VISIBLE
     }
 
     override fun hideLoading() {
-
+        binding.progressBar.visibility = View.GONE
     }
 
     override fun showError(message: String) {
-
+        binding.bookViewState.rootView.visibility = View.VISIBLE
+        binding.bookViewState.tvErrorMsg.text = message
     }
 }
