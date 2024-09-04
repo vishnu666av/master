@@ -50,6 +50,9 @@ open class BookListPresenter(private val bookUseCase: GetBooksUseCase) :
 
     override fun detachView() {
         super.detachView()
+
+        // Cancel the CoroutineScope to stop any ongoing coroutines
+        presenterScope.coroutineContext[Job]?.cancel()
     }
 
 }

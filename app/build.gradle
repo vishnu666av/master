@@ -102,6 +102,14 @@ dependencies {
     //glide
     implementation libs.glide
 
+    //Mockito
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.kotlinx.coroutines.test)
+
+    //Mockk
+    testImplementation(libs.mockk)
+
     //reactive x
     implementation libs.rx.android
     implementation libs.rx.java

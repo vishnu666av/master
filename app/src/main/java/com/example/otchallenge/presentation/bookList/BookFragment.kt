@@ -29,8 +29,6 @@ class BookFragment : Fragment(), BookListContract.View {
 
     private var _binding: FragmentBookBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,7 +64,6 @@ class BookFragment : Fragment(), BookListContract.View {
             BookDelegateAdapter(),
         )
         adapter = DelegationAdapter(delegates)
-        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.adapter = adapter
     }
 
