@@ -1,3 +1,5 @@
 <resources>
 	<string name="app_name">AndroidOTChallenge</string>
+	<!-- Strings used for fragments for navigation -->
+	<string name="fragment_book_label">Books</string>
 </resources>
