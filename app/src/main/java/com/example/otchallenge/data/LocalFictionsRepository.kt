@@ -1,10 +1,11 @@
 package com.example.otchallenge.data
 
+import com.example.otchallenge.data.local.BookDao
 import com.example.otchallenge.model.Fiction
+import javax.inject.Inject
 
-class LocalFictionsRepository : Repository<Fiction> {
+class LocalFictionsRepository @Inject constructor(private val bookDao: BookDao) :
+    Repository<Fiction> {
 
-    override fun all(): List<Fiction> {
-        return listOf()
-    }
+    override fun all(): List<Fiction> = bookDao.getAllBooks().map { Fiction.fromBook(it) }
 }

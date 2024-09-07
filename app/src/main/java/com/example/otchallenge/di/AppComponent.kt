@@ -8,8 +8,10 @@ import javax.inject.Singleton
 @Component(
     modules = [
         ViewModelModule::class,
+        NetworkModule::class,
+        DatabaseModule::class,
         RepositoryModule::class,
-        RepositoryImplementationsModule::class
+        RepositoryBindingsModule::class
     ]
 )
 interface AppComponent {

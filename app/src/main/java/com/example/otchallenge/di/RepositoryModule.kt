@@ -2,34 +2,18 @@ package com.example.otchallenge.di
 
 import com.example.otchallenge.data.LocalFictionsRepository
 import com.example.otchallenge.data.RemoteFictionsRepository
-import com.example.otchallenge.data.Repository
-import com.example.otchallenge.model.Fiction
-import dagger.Binds
+import com.example.otchallenge.data.local.BookDao
+import com.example.otchallenge.data.network.NYTimesApiService
 import dagger.Module
-import javax.inject.Qualifier
+import dagger.Provides
 
 @Module
-abstract class RepositoryModule {
+class RepositoryModule {
 
-    @Binds
-    @LocalRepository
-    abstract fun bindLocalRepository(repository: LocalFictionsRepository): Repository<Fiction>
+    @Provides
+    fun provideLocalRepository(bookDao: BookDao) = LocalFictionsRepository(bookDao)
 
-    @Binds
-    @RemoteRepository
-    abstract fun bindRemoteRepository(repository: RemoteFictionsRepository): Repository<Fiction>
+    @Provides
+    fun provideRemoteRepository(apiService: NYTimesApiService) =
+        RemoteFictionsRepository(apiService)
 }
-
-/**
- * denotes a locally stored implementation of [Repository], e.g. a sqlite database
- */
-@Qualifier
-@Retention(AnnotationRetention.RUNTIME)
-annotation class LocalRepository
-
-/**
- * denotes a remotely stored implementation of [Repository], e.g. a web api
- */
-@Qualifier
-@Retention(AnnotationRetention.RUNTIME)
-annotation class RemoteRepository

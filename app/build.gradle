@@ -63,17 +63,21 @@ dependencies {
     implementation libs.navigation.compose
     implementation libs.fragment.ktx
 
-    //retrofit
+    // retrofit
     implementation libs.retrofit
-    implementation libs.retrofit.rx.adapter
+    implementation libs.okhttp.logging
+    implementation libs.retrofit.moshi
+    implementation libs.moshi
+    implementation libs.moshi.kotlin
+    kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.14.0'
 
-    //glide
+    // room
+    implementation libs.room.runtime
+    kapt libs.room.compiler
+    implementation libs.room.ktx
+
+    // glide
     implementation libs.glide
-
-    //reactive x
-    implementation libs.rx.android
-    implementation libs.rx.java
-    implementation libs.rx.kotlin
 
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit

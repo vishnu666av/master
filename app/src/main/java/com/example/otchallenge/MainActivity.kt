@@ -15,6 +15,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModelProvider
+import com.example.otchallenge.ui.FictionsListContent
 import com.example.otchallenge.ui.FictionsListUiState
 import com.example.otchallenge.ui.FictionsListViewModel
 import javax.inject.Inject
@@ -39,13 +40,14 @@ class MainActivity : ComponentActivity() {
                         .fillMaxSize()
                         .padding(WindowInsets.systemBars.asPaddingValues())
                 ) {
+                    // todo: remember to use CrossFade for animations
                     when (val uiState = viewModel.uiState.collectAsState().value) {
                         FictionsListUiState.Idle -> {}
                         FictionsListUiState.Loading -> {}
                         FictionsListUiState.Error -> {}
                         is FictionsListUiState.Empty -> {}
-                        is FictionsListUiState.OfflineData -> {}
-                        is FictionsListUiState.OnlineData -> {}
+                        is FictionsListUiState.OfflineData -> FictionsListContent(fictions = uiState.items)
+                        is FictionsListUiState.OnlineData -> FictionsListContent(fictions = uiState.items)
                     }
                 }
             }

@@ -19,6 +19,11 @@ class FictionsListPresenter @Inject constructor(
 ) {
 
     suspend fun getFictions(): FictionsDataState = withContext(Dispatchers.IO) {
+        /**
+         * todo: change the logic here to save response to database.
+         * I can probably forgo the Stale and Fresh data list and just mark it with a
+         * boolean flag to indicate this is a stale list.
+         */
         when (val fetchRemoteResult = getRemoteData()) {
             is FictionsDataState.FreshListData -> fetchRemoteResult
             else -> getLocalData()
