@@ -30,18 +30,18 @@ class FictionsListPresenter @Inject constructor(
         }
     }
 
-    private fun getRemoteData(): FictionsDataState = try {
+    private suspend fun getRemoteData(): FictionsDataState = try {
         val items = remoteRepository.all()
         if (items.isEmpty()) {
             FictionsDataState.Empty(timestamp = Date())
         } else {
-            FictionsDataState.StaleListData(items = items, timestamp = Date())
+            FictionsDataState.FreshListData(items = items, timestamp = Date())
         }
     } catch (e: Exception) {
         FictionsDataState.Error(message = e.localizedMessage, timestamp = Date())
     }
 
-    private fun getLocalData(): FictionsDataState = try {
+    private suspend fun getLocalData(): FictionsDataState = try {
         val items = localRepository.all()
         if (items.isEmpty()) {
             FictionsDataState.Empty(timestamp = Date())

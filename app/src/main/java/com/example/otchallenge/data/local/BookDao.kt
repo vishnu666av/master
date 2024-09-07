@@ -8,8 +8,8 @@ import com.example.otchallenge.data.Book
 @Dao
 interface BookDao {
     @Insert
-    fun insert(book: Book)
+    suspend fun insert(book: Book)
 
     @Query("SELECT * FROM books ORDER BY rank")
-    fun getAllBooks(): List<Book>
+    suspend fun getAllBooks(): List<Book>
 }

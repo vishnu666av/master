@@ -1,6 +1,5 @@
 package com.example.otchallenge.data.network
 
-import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -15,8 +14,8 @@ interface NYTimesApiService {
     }
 
     @GET("svc/books/v3/lists/current/hardcover-fiction.json")
-    fun getAllBooks(
+    suspend fun getAllBooks(
         @Query("api-key") apiKey: String = API_KEY,
         @Query("offset") offset: Int = 0
-    ): Call<GetBooksResult>
+    ): GetBooksResult
 }

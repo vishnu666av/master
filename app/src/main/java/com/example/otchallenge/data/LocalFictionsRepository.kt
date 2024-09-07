@@ -7,5 +7,5 @@ import javax.inject.Inject
 class LocalFictionsRepository @Inject constructor(private val bookDao: BookDao) :
     Repository<Fiction> {
 
-    override fun all(): List<Fiction> = bookDao.getAllBooks().map { Fiction.fromBook(it) }
+    override suspend fun all(): List<Fiction> = bookDao.getAllBooks().map { Fiction.fromBook(it) }
 }
