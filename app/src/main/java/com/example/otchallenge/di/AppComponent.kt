@@ -5,7 +5,13 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component
+@Component(
+    modules = [
+        ViewModelModule::class,
+        RepositoryModule::class,
+        RepositoryImplementationsModule::class
+    ]
+)
 interface AppComponent {
-	fun inject(activity: MainActivity)
+    fun inject(activity: MainActivity)
 }
