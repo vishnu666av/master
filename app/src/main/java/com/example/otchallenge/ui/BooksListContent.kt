@@ -158,18 +158,28 @@ private fun DataState(
         1.0f
     }
 
-    LazyColumn(modifier.padding(horizontal = 16.dp)) {
+    val itemsModifier = Modifier.padding(horizontal = 16.dp)
+
+    LazyColumn(modifier) {
         item {
-            ListTitle(isOfflineList = isOfflineList)
+            ListTitle(
+                isOfflineList = isOfflineList,
+                modifier = itemsModifier
+            )
 
             Spacer(modifier = Modifier.size(16.dp))
         }
 
         items(items) {
-            BookRowItem(book = it, imageLoader = imageLoader, dimmingAlpha = dimmingAlpha)
+            BookRowItem(
+                book = it,
+                imageLoader = imageLoader,
+                dimmingAlpha = dimmingAlpha,
+                modifier = itemsModifier
+            )
 
             HorizontalDivider(
-                modifier = Modifier
+                modifier = itemsModifier
                     .padding(vertical = 4.dp)
                     .height(1.dp),
                 color = MaterialTheme.colorScheme.primary.copy(alpha = 0.05f)

@@ -15,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.RequestManager
 import com.example.otchallenge.BooksApp
@@ -50,7 +51,8 @@ class BooksListActivity : ComponentActivity() {
                         BooksListContent(
                             uiState = it,
                             imageLoader = imageLoader,
-                            onRetryCta = { viewModel.getBooks() }
+                            onRetryCta = { viewModel.getBooks() },
+                            modifier = Modifier.padding(vertical = 16.dp)
                         )
                     }
                 }

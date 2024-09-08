@@ -30,7 +30,7 @@ fun Modifier.loadingShimmer(showShimmer: Boolean): Modifier = composed {
             initialValue = 0f,
             targetValue = 1000f,
             animationSpec = infiniteRepeatable(
-                animation = tween(1500), repeatMode = RepeatMode.Reverse
+                animation = tween(1250), repeatMode = RepeatMode.Reverse
             ), label = ""
         )
 

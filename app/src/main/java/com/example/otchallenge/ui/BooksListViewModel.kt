@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.otchallenge.model.Book
 import com.example.otchallenge.model.BooksListDataState
 import com.example.otchallenge.model.BooksListPresenter
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -25,6 +26,9 @@ class BooksListViewModel @Inject constructor(private val presenter: BooksListPre
     fun getBooks() = viewModelScope.launch {
         viewModelScope.launch {
             _uiState.update { BooksListUiState.Loading }
+
+            // delay added to enhance visual appeal of state transitions. feel free to remove.
+            delay(2500)
 
             _uiState.update {
                 when (val result = presenter.getBooks()) {
