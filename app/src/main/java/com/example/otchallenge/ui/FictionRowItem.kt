@@ -1,6 +1,5 @@
 package com.example.otchallenge.ui
 
-import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,14 +14,21 @@ import androidx.compose.ui.unit.dp
 import com.example.otchallenge.model.Fiction
 
 @Composable
-fun FictionRowItem(fiction: Fiction, modifier: Modifier = Modifier) {
+fun FictionRowItem(
+    fiction: Fiction,
+    modifier: Modifier = Modifier,
+    isLoading: Boolean = false
+) {
     Column(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
     ) {
+
+        Spacer(modifier = Modifier.size(16.dp))
+
         Text(
-            modifier = modifier,
+            modifier = modifier.loadingShimmer(isLoading),
             text = fiction.title,
             color = MaterialTheme.colorScheme.primary,
             style = MaterialTheme.typography.labelLarge
@@ -31,7 +37,7 @@ fun FictionRowItem(fiction: Fiction, modifier: Modifier = Modifier) {
         Spacer(Modifier.size(4.dp))
 
         Text(
-            modifier = modifier,
+            modifier = modifier.loadingShimmer(isLoading),
             text = "by ${fiction.author}",
             color = MaterialTheme.colorScheme.tertiary,
             style = MaterialTheme.typography.labelSmall
@@ -40,27 +46,23 @@ fun FictionRowItem(fiction: Fiction, modifier: Modifier = Modifier) {
         Spacer(Modifier.size(8.dp))
 
         Text(
-            modifier = modifier,
+            modifier = modifier.loadingShimmer(isLoading),
             text = fiction.description,
             color = MaterialTheme.colorScheme.secondary,
             style = MaterialTheme.typography.bodySmall
         )
+
+        Spacer(modifier = Modifier.size(16.dp))
     }
 }
 
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_NO, name = "Light Mode")
-@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES, name = "Dark Mode")
+@Preview(showBackground = true)
 @Composable
 fun PreviewFictionRowItem() {
     MaterialTheme {
         FictionRowItem(
-            fiction = Fiction(
-                rank = 1,
-                title = "Romeo and Juliet",
-                author = "William Shakespeare",
-                description = "A tragic love story that follows two young lovers, Romeo Montague and Juliet Capulet, whose families are embroiled in a bitter feud. Despite their families’ hatred for each other, Romeo and Juliet secretly marry. However, a series of misunderstandings and a tragic chain of events lead to the deaths of both lovers. Their deaths ultimately reconcile their feuding families.",
-                imageUrl = ""
-            )
+            modifier = Modifier.padding(10.dp),
+            fiction = Fiction.prototype()
         )
     }
 }

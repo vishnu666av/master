@@ -20,9 +20,9 @@ class FictionsListViewModel @Inject constructor(presenter: FictionsListPresenter
 
     init {
         viewModelScope.launch {
-            _uiState.update {
-                FictionsListUiState.Loading
+            _uiState.update { FictionsListUiState.Loading }
 
+            _uiState.update {
                 when (val result = presenter.getFictions()) {
                     is FictionsDataState.Empty ->
                         FictionsListUiState.Empty(formatDate(result.timestamp))
