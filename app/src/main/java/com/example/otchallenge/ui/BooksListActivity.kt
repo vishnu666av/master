@@ -16,6 +16,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.RequestManager
 import com.example.otchallenge.BooksApp
 import javax.inject.Inject
 
@@ -23,6 +24,9 @@ class BooksListActivity : ComponentActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    @Inject
+    lateinit var imageLoader: RequestManager
 
     private val viewModel: BooksListViewModel by viewModels { viewModelFactory }
 
@@ -43,7 +47,11 @@ class BooksListActivity : ComponentActivity() {
                         targetState = viewModel.uiState.collectAsState().value,
                         label = this.javaClass.simpleName
                     ) {
-                        BooksListContent(it)
+                        BooksListContent(
+                            uiState = it,
+                            imageLoader = imageLoader,
+                            onRetryCta = { viewModel.getBooks() }
+                        )
                     }
                 }
             }

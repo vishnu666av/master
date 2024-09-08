@@ -13,12 +13,17 @@ import java.util.Date
 import javax.inject.Inject
 
 
-class BooksListViewModel @Inject constructor(presenter: BooksListPresenter) : ViewModel() {
+class BooksListViewModel @Inject constructor(private val presenter: BooksListPresenter) :
+    ViewModel() {
 
     private val _uiState = MutableStateFlow<BooksListUiState>(BooksListUiState.Idle)
     val uiState: StateFlow<BooksListUiState> get() = _uiState
 
     init {
+        getBooks()
+    }
+
+    fun getBooks() = viewModelScope.launch {
         viewModelScope.launch {
             _uiState.update { BooksListUiState.Loading }
 
