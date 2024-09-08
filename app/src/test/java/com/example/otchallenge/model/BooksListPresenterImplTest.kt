@@ -85,8 +85,9 @@ class BooksListPresenterImplTest {
         // Assert
         assert(remoteRepository.all().isEmpty())
         assert(result is BooksListDataState.StaleList)
-        assert(localRepository.all().size == 1)
-        assert(localRepository.all()[0] == BookDto.testPrototype())
+        result as BooksListDataState.StaleList
+        assert(result.items.size == 1)
+        assert(result.items[0] == BookDto.testPrototype())
     }
 
     @Test
@@ -105,9 +106,12 @@ class BooksListPresenterImplTest {
         val result = presenter.getBooks()
 
         // Assert
-        assert(result is BooksListDataState.StaleList)
         assert(localRepository.all().size == 1)
         assert(localRepository.all()[0] == BookDto.testPrototype())
+        assert(result is BooksListDataState.StaleList)
+        result as BooksListDataState.StaleList
+        assert(result.items.size == 1)
+        assert(result.items[0] == BookDto.testPrototype())
     }
 
     @Test
@@ -163,7 +167,8 @@ class BooksListPresenterImplTest {
         assert(localRepository.all()[0] == BookDto.testPrototype())
         assert(remoteRepository.all().isEmpty())
         assert(result is BooksListDataState.StaleList)
-        assert((result as BooksListDataState.StaleList).items.size == 1)
+        result as BooksListDataState.StaleList
+        assert(result.items.size == 1)
         assert(result.items[0] == BookDto.testPrototype())
     }
 
