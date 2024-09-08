@@ -23,7 +23,7 @@ class BooksListViewModel @Inject constructor(presenter: BooksListPresenter) : Vi
             _uiState.update { BooksListUiState.Loading }
 
             _uiState.update {
-                when (val result = presenter.getFictions()) {
+                when (val result = presenter.getBooks()) {
                     is BooksListDataState.Empty ->
                         BooksListUiState.Empty(formatDate(result.timestamp))
 
