@@ -1,7 +1,7 @@
 package com.example.otchallenge.data.local
 
 import androidx.room.TypeConverter
-import com.example.otchallenge.data.BuyLink
+import com.example.otchallenge.model.BuyLink
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory

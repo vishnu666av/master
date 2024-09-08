@@ -4,10 +4,11 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.example.otchallenge.data.local.BuyLinkListTypeConverter
+import com.example.otchallenge.model.BuyLink
 import com.squareup.moshi.Json
 
 @Entity(tableName = "books")
-data class Book(
+data class BookDto(
     @Json(ignore = true)
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val rank: Int,
@@ -21,9 +22,6 @@ data class Book(
     @Json(name = "buy_links")
     @TypeConverters(BuyLinkListTypeConverter::class)
     val buyLinks: List<BuyLink>
-)
-
-data class BuyLink(
-    val name: String,
-    val url: String
-)
+) {
+    companion object
+}

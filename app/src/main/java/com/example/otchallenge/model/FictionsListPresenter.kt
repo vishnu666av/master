@@ -1,5 +1,6 @@
 package com.example.otchallenge.model
 
+import com.example.otchallenge.data.BookDto
 import com.example.otchallenge.data.Repository
 import com.example.otchallenge.di.LocalRepository
 import com.example.otchallenge.di.RemoteRepository
@@ -14,18 +15,17 @@ import javax.inject.Inject
  * on local database if the call fails or internet connection is not available.
  */
 class FictionsListPresenter @Inject constructor(
-    @LocalRepository val localRepository: Repository<Fiction>,
-    @RemoteRepository val remoteRepository: Repository<Fiction>
+    @LocalRepository val localRepository: Repository<BookDto>,
+    @RemoteRepository val remoteRepository: Repository<BookDto>
 ) {
 
     suspend fun getFictions(): FictionsDataState = withContext(Dispatchers.IO) {
-        /**
-         * todo: change the logic here to save response to database.
-         * I can probably forgo the Stale and Fresh data list and just mark it with a
-         * boolean flag to indicate this is a stale list.
-         */
-        when (val fetchRemoteResult = getRemoteData()) {
-            is FictionsDataState.FreshListData -> fetchRemoteResult
+        when (val remoteResult = getRemoteData()) {
+            is FictionsDataState.FreshListData -> {
+                localRepository.save(remoteResult.items)
+                remoteResult
+            }
+
             else -> getLocalData()
         }
     }

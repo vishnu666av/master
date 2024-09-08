@@ -1,9 +1,9 @@
 package com.example.otchallenge.di
 
+import com.example.otchallenge.data.BookDto
 import com.example.otchallenge.data.LocalFictionsRepository
 import com.example.otchallenge.data.RemoteFictionsRepository
 import com.example.otchallenge.data.Repository
-import com.example.otchallenge.model.Fiction
 import dagger.Binds
 import dagger.Module
 import javax.inject.Qualifier
@@ -13,11 +13,11 @@ abstract class RepositoryBindingsModule {
 
     @Binds
     @LocalRepository
-    abstract fun bindLocalRepository(repository: LocalFictionsRepository): Repository<Fiction>
+    abstract fun bindLocalRepository(repository: LocalFictionsRepository): Repository<BookDto>
 
     @Binds
     @RemoteRepository
-    abstract fun bindRemoteRepository(repository: RemoteFictionsRepository): Repository<Fiction>
+    abstract fun bindRemoteRepository(repository: RemoteFictionsRepository): Repository<BookDto>
 }
 
 /**

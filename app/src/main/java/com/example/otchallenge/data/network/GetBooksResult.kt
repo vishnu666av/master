@@ -1,6 +1,6 @@
 package com.example.otchallenge.data.network
 
-import com.example.otchallenge.data.Book
+import com.example.otchallenge.data.BookDto
 import com.squareup.moshi.Json
 
 data class GetBooksResult(
@@ -13,7 +13,7 @@ data class GetBooksResult(
 )
 
 data class Results(
-    val books: List<Book>,
+    val books: List<BookDto>,
 
     @Json(name = "display_name")
     val displayName: String

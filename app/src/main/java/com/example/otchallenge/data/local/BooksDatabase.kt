@@ -5,9 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.example.otchallenge.data.Book
+import com.example.otchallenge.data.BookDto
 
-@Database(entities = [Book::class], version = 1)
+@Database(entities = [BookDto::class], version = 1)
 @TypeConverters(BuyLinkListTypeConverter::class)
 abstract class BooksDatabase : RoomDatabase() {
 
