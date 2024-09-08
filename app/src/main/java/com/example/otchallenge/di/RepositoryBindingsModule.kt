@@ -1,8 +1,8 @@
 package com.example.otchallenge.di
 
 import com.example.otchallenge.data.BookDto
-import com.example.otchallenge.data.LocalFictionsRepository
-import com.example.otchallenge.data.RemoteFictionsRepository
+import com.example.otchallenge.data.LocalBooksRepository
+import com.example.otchallenge.data.RemoteBooksRepository
 import com.example.otchallenge.data.Repository
 import dagger.Binds
 import dagger.Module
@@ -13,11 +13,11 @@ abstract class RepositoryBindingsModule {
 
     @Binds
     @LocalRepository
-    abstract fun bindLocalRepository(repository: LocalFictionsRepository): Repository<BookDto>
+    abstract fun bindLocalRepository(repository: LocalBooksRepository): Repository<BookDto>
 
     @Binds
     @RemoteRepository
-    abstract fun bindRemoteRepository(repository: RemoteFictionsRepository): Repository<BookDto>
+    abstract fun bindRemoteRepository(repository: RemoteBooksRepository): Repository<BookDto>
 }
 
 /**

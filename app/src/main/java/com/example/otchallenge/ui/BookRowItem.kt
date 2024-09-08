@@ -11,11 +11,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.otchallenge.model.Fiction
+import com.example.otchallenge.model.Book
 
 @Composable
-fun FictionRowItem(
-    fiction: Fiction,
+fun BookRowItem(
+    book: Book,
     modifier: Modifier = Modifier,
     isLoading: Boolean = false
 ) {
@@ -29,7 +29,7 @@ fun FictionRowItem(
 
         Text(
             modifier = modifier.loadingShimmer(isLoading),
-            text = fiction.title,
+            text = book.title,
             color = MaterialTheme.colorScheme.primary,
             style = MaterialTheme.typography.labelLarge
         )
@@ -38,7 +38,7 @@ fun FictionRowItem(
 
         Text(
             modifier = modifier.loadingShimmer(isLoading),
-            text = "by ${fiction.author}",
+            text = "by ${book.author}",
             color = MaterialTheme.colorScheme.tertiary,
             style = MaterialTheme.typography.labelSmall
         )
@@ -47,7 +47,7 @@ fun FictionRowItem(
 
         Text(
             modifier = modifier.loadingShimmer(isLoading),
-            text = fiction.description,
+            text = book.description,
             color = MaterialTheme.colorScheme.secondary,
             style = MaterialTheme.typography.bodySmall
         )
@@ -60,9 +60,9 @@ fun FictionRowItem(
 @Composable
 fun PreviewFictionRowItem() {
     MaterialTheme {
-        FictionRowItem(
+        BookRowItem(
             modifier = Modifier.padding(10.dp),
-            fiction = Fiction.prototype()
+            book = Book.prototype()
         )
     }
 }

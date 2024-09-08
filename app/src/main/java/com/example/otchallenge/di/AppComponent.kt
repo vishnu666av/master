@@ -1,6 +1,6 @@
 package com.example.otchallenge.di
 
-import com.example.otchallenge.MainActivity
+import com.example.otchallenge.ui.BooksListActivity
 import dagger.Component
 import javax.inject.Singleton
 
@@ -15,5 +15,5 @@ import javax.inject.Singleton
     ]
 )
 interface AppComponent {
-    fun inject(activity: MainActivity)
+    fun inject(activity: BooksListActivity)
 }

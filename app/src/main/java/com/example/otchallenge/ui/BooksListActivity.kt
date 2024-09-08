@@ -1,4 +1,4 @@
-package com.example.otchallenge
+package com.example.otchallenge.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -16,21 +16,20 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModelProvider
-import com.example.otchallenge.ui.FictionsListContent
-import com.example.otchallenge.ui.FictionsListViewModel
+import com.example.otchallenge.BooksApp
 import javax.inject.Inject
 
-class MainActivity : ComponentActivity() {
+class BooksListActivity : ComponentActivity() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private val viewModel: FictionsListViewModel by viewModels { viewModelFactory }
+    private val viewModel: BooksListViewModel by viewModels { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        (application as MyApplication).appComponent.inject(this)
+        (application as BooksApp).appComponent.inject(this)
 
         setContent {
             enableEdgeToEdge()
@@ -44,7 +43,7 @@ class MainActivity : ComponentActivity() {
                         targetState = viewModel.uiState.collectAsState().value,
                         label = this.javaClass.simpleName
                     ) {
-                        FictionsListContent(it)
+                        BooksListContent(it)
                     }
                 }
             }

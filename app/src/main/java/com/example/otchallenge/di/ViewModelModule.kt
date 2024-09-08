@@ -2,7 +2,7 @@ package com.example.otchallenge.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.otchallenge.ui.FictionsListViewModel
+import com.example.otchallenge.ui.BooksListViewModel
 import dagger.Binds
 import dagger.MapKey
 import dagger.Module
@@ -17,8 +17,8 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(FictionsListViewModel::class)
-    abstract fun bindFictionsListViewModel(viewModel: FictionsListViewModel): ViewModel
+    @ViewModelKey(BooksListViewModel::class)
+    abstract fun bindBooksListViewModel(viewModel: BooksListViewModel): ViewModel
 }
 
 @Target(AnnotationTarget.FUNCTION)

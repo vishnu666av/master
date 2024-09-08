@@ -19,20 +19,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.otchallenge.R
-import com.example.otchallenge.model.Fiction
+import com.example.otchallenge.model.Book
 
 @Composable
-fun FictionsListContent(
-    uiState: FictionsListUiState,
+fun BooksListContent(
+    uiState: BooksListUiState,
     modifier: Modifier = Modifier
 ) {
     when (uiState) {
-        FictionsListUiState.Idle -> {}
-        FictionsListUiState.Loading -> LoadingState(modifier = modifier)
-        FictionsListUiState.Error -> ErrorState()
-        is FictionsListUiState.Empty -> EmptyState()
-        is FictionsListUiState.OfflineData -> DataState(items = uiState.items, isOfflineList = true)
-        is FictionsListUiState.OnlineData -> DataState(items = uiState.items, isOfflineList = false)
+        BooksListUiState.Idle -> {}
+        BooksListUiState.Loading -> LoadingState(modifier = modifier)
+        BooksListUiState.Error -> ErrorState()
+        is BooksListUiState.Empty -> EmptyState()
+        is BooksListUiState.OfflineList -> DataState(items = uiState.items, isOfflineList = true)
+        is BooksListUiState.OnlineList -> DataState(items = uiState.items, isOfflineList = false)
     }
 }
 
@@ -40,8 +40,8 @@ fun FictionsListContent(
 private fun LoadingState(modifier: Modifier = Modifier) {
     LazyColumn(modifier.padding(horizontal = 16.dp)) {
         items(3) {
-            FictionRowItem(
-                fiction = Fiction.prototype(),
+            BookRowItem(
+                book = Book.prototype(),
                 isLoading = true
             )
 
@@ -103,7 +103,7 @@ private fun EmptyState(modifier: Modifier = Modifier) {
 @Composable
 private fun DataState(
     modifier: Modifier = Modifier,
-    items: List<Fiction>,
+    items: List<Book>,
     isOfflineList: Boolean
 ) {
     LazyColumn(modifier.padding(horizontal = 16.dp)) {
@@ -123,7 +123,7 @@ private fun DataState(
         }
 
         items(items) {
-            FictionRowItem(fiction = it)
+            BookRowItem(book = it)
 
             Spacer(modifier = Modifier.size(8.dp))
         }
@@ -160,10 +160,10 @@ private fun PreviewOfflineDataState() {
     MaterialTheme {
         DataState(
             items = listOf(
-                Fiction.prototype(),
-                Fiction.prototype(),
-                Fiction.prototype(),
-                Fiction.prototype()
+                Book.prototype(),
+                Book.prototype(),
+                Book.prototype(),
+                Book.prototype()
             ),
             isOfflineList = true
         )
@@ -176,10 +176,10 @@ private fun PreviewOnlineDataState() {
     MaterialTheme {
         DataState(
             items = listOf(
-                Fiction.prototype(),
-                Fiction.prototype(),
-                Fiction.prototype(),
-                Fiction.prototype()
+                Book.prototype(),
+                Book.prototype(),
+                Book.prototype(),
+                Book.prototype()
             ),
             isOfflineList = false
         )

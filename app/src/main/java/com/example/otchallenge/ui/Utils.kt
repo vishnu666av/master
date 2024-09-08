@@ -13,7 +13,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import com.example.otchallenge.data.BookDto
-import com.example.otchallenge.model.Fiction
+import com.example.otchallenge.model.Book
 
 /**
  * a modifier extension to add shimmering effect to a component.
@@ -56,7 +56,7 @@ fun Modifier.loadingShimmer(showShimmer: Boolean): Modifier = composed {
 /**
  * used in ui and unit testing.
  */
-fun Fiction.Companion.prototype(): Fiction = Fiction(
+fun Book.Companion.prototype(): Book = Book(
     rank = 1,
     title = "Romeo and Juliet",
     author = "William Shakespeare",
@@ -66,10 +66,10 @@ fun Fiction.Companion.prototype(): Fiction = Fiction(
 )
 
 /**
- * maps a [BookDto] object to a [Fiction]
+ * maps a [BookDto] object to a [Book]
  */
-fun Fiction.Companion.fromBook(bookDto: BookDto): Fiction =
-    Fiction(
+fun Book.Companion.fromBookDto(bookDto: BookDto): Book =
+    Book(
         rank = bookDto.rank,
         title = bookDto.title,
         author = bookDto.author,

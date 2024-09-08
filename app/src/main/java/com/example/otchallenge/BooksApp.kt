@@ -5,7 +5,7 @@ import com.example.otchallenge.di.AppComponent
 import com.example.otchallenge.di.DaggerAppComponent
 import com.example.otchallenge.di.DatabaseModule
 
-class MyApplication : Application() {
+class BooksApp : Application() {
 
     lateinit var appComponent: AppComponent
 

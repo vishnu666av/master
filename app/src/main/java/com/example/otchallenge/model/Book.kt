@@ -1,6 +1,6 @@
 package com.example.otchallenge.model
 
-data class Fiction(
+data class Book(
     val rank: Int,
     val title: String,
     val author: String,

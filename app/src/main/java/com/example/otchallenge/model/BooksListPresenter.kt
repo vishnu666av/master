@@ -14,14 +14,14 @@ import javax.inject.Inject
  * in this case, the logic is to try displaying fresh online data and fall back
  * on local database if the call fails or internet connection is not available.
  */
-class FictionsListPresenter @Inject constructor(
+class BooksListPresenter @Inject constructor(
     @LocalRepository val localRepository: Repository<BookDto>,
     @RemoteRepository val remoteRepository: Repository<BookDto>
 ) {
 
-    suspend fun getFictions(): FictionsDataState = withContext(Dispatchers.IO) {
+    suspend fun getFictions(): BooksListDataState = withContext(Dispatchers.IO) {
         when (val remoteResult = getRemoteData()) {
-            is FictionsDataState.FreshListData -> {
+            is BooksListDataState.FreshList -> {
                 localRepository.save(remoteResult.items)
                 remoteResult
             }
@@ -30,25 +30,25 @@ class FictionsListPresenter @Inject constructor(
         }
     }
 
-    private suspend fun getRemoteData(): FictionsDataState = try {
+    private suspend fun getRemoteData(): BooksListDataState = try {
         val items = remoteRepository.all()
         if (items.isEmpty()) {
-            FictionsDataState.Empty(timestamp = Date())
+            BooksListDataState.Empty(timestamp = Date())
         } else {
-            FictionsDataState.FreshListData(items = items, timestamp = Date())
+            BooksListDataState.FreshList(items = items, timestamp = Date())
         }
     } catch (e: Exception) {
-        FictionsDataState.Error(message = e.localizedMessage, timestamp = Date())
+        BooksListDataState.Error(message = e.localizedMessage, timestamp = Date())
     }
 
-    private suspend fun getLocalData(): FictionsDataState = try {
+    private suspend fun getLocalData(): BooksListDataState = try {
         val items = localRepository.all()
         if (items.isEmpty()) {
-            FictionsDataState.Empty(timestamp = Date())
+            BooksListDataState.Empty(timestamp = Date())
         } else {
-            FictionsDataState.StaleListData(items = items, timestamp = Date())
+            BooksListDataState.StaleList(items = items, timestamp = Date())
         }
     } catch (e: Exception) {
-        FictionsDataState.Error(message = e.localizedMessage, timestamp = Date())
+        BooksListDataState.Error(message = e.localizedMessage, timestamp = Date())
     }
 }
