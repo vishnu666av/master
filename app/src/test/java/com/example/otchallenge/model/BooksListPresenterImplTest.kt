@@ -2,6 +2,8 @@ package com.example.otchallenge.model
 
 import com.example.otchallenge.data.BookDto
 import com.example.otchallenge.data.Repository
+import com.example.otchallenge.fixtures.testPrototype
+import com.example.otchallenge.fixtures.testPrototypeList
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -182,15 +184,4 @@ class BooksListPresenterImplTest {
         // Assert
         assert(result is BooksListDataState.Error)
     }
-
-    private fun BookDto.Companion.testPrototype() = BookDto(
-        rank = 1,
-        title = "book title",
-        author = "book author",
-        description = "book description",
-        imageUrl = "book imageUrk",
-        buyLinks = listOf()
-    )
-
-    private fun BookDto.Companion.testPrototypeList() = listOf(testPrototype())
 }
