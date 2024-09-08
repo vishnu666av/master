@@ -15,8 +15,8 @@ import javax.inject.Inject
  * on local database if the call fails or internet connection is not available.
  */
 class BooksListPresenterImpl @Inject constructor(
-    @LocalRepository val localRepository: Repository<BookDto>,
-    @RemoteRepository val remoteRepository: Repository<BookDto>
+    @LocalRepository private val localRepository: Repository<BookDto>,
+    @RemoteRepository private val remoteRepository: Repository<BookDto>
 ) : BooksListPresenter {
 
     override suspend fun getBooks(): BooksListDataState = withContext(Dispatchers.IO) {
