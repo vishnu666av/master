@@ -25,11 +25,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bumptech.glide.RequestManager
@@ -80,7 +83,7 @@ private fun LoadingState(
     imageLoader: RequestManager? = null
 ) {
     LazyColumn(modifier.padding(horizontal = 16.dp)) {
-        items(3) {
+        items(5) {
             BookRowItem(
                 book = Book.prototype(),
                 imageLoader = imageLoader,
@@ -149,24 +152,21 @@ private fun DataState(
     imageLoader: RequestManager? = null,
     isOfflineList: Boolean
 ) {
+    val dimmingAlpha = if (isOfflineList) {
+        0.5f
+    } else {
+        1.0f
+    }
+
     LazyColumn(modifier.padding(horizontal = 16.dp)) {
-        if (isOfflineList) {
-            item {
+        item {
+            ListTitle(isOfflineList = isOfflineList)
 
-                Text(
-                    text = stringResource(id = R.string.label_offline_list),
-                    color = MaterialTheme.colorScheme.error,
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.labelLarge,
-                    modifier = Modifier.padding(horizontal = 16.dp)
-                )
-
-                Spacer(modifier = Modifier.size(4.dp))
-            }
+            Spacer(modifier = Modifier.size(16.dp))
         }
 
         items(items) {
-            BookRowItem(book = it, imageLoader = imageLoader)
+            BookRowItem(book = it, imageLoader = imageLoader, dimmingAlpha = dimmingAlpha)
 
             HorizontalDivider(
                 modifier = Modifier
@@ -179,9 +179,34 @@ private fun DataState(
 }
 
 @Composable
+private fun ListTitle(isOfflineList: Boolean, modifier: Modifier = Modifier) {
+    val title = buildAnnotatedString {
+        append(stringResource(id = R.string.label_hard_cover_fictions))
+        if (isOfflineList) {
+            withStyle(
+                style = MaterialTheme.typography.labelLarge.toSpanStyle().copy(
+                    color = MaterialTheme.colorScheme.tertiary
+                )
+            ) {
+                append(" (${stringResource(id = R.string.label_offline_list)})")
+            }
+        }
+    }
+
+    Text(
+        text = title,
+        color = MaterialTheme.colorScheme.primary,
+        textAlign = TextAlign.Start,
+        style = MaterialTheme.typography.titleMedium,
+        modifier = modifier.padding(horizontal = 16.dp)
+    )
+}
+
+@Composable
 fun BookRowItem(
     book: Book,
     modifier: Modifier = Modifier,
+    dimmingAlpha: Float = 1.0f,
     imageLoader: RequestManager? = null,
     isLoading: Boolean = false
 ) {
@@ -195,7 +220,8 @@ fun BookRowItem(
             imageLoader = imageLoader,
             modifier = Modifier
                 .padding(top = 4.dp)
-                .loadingShimmer(isLoading),
+                .loadingShimmer(isLoading)
+                .alpha(dimmingAlpha),
             url = book.imageUrl
         )
 
@@ -210,7 +236,7 @@ fun BookRowItem(
             Text(
                 modifier = Modifier.loadingShimmer(isLoading),
                 text = book.title,
-                color = MaterialTheme.colorScheme.primary,
+                color = MaterialTheme.colorScheme.primary.copy(dimmingAlpha),
                 style = MaterialTheme.typography.labelLarge
             )
 
@@ -219,7 +245,7 @@ fun BookRowItem(
             Text(
                 modifier = Modifier.loadingShimmer(isLoading),
                 text = "by ${book.author}",
-                color = MaterialTheme.colorScheme.tertiary,
+                color = MaterialTheme.colorScheme.tertiary.copy(dimmingAlpha),
                 style = MaterialTheme.typography.labelSmall
             )
 
@@ -228,7 +254,7 @@ fun BookRowItem(
             Text(
                 modifier = Modifier.loadingShimmer(isLoading),
                 text = book.description,
-                color = MaterialTheme.colorScheme.secondary,
+                color = MaterialTheme.colorScheme.secondary.copy(dimmingAlpha),
                 style = MaterialTheme.typography.bodySmall
             )
         }
