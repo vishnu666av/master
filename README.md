@@ -31,11 +31,14 @@ requirements.
   ![](app/src/main/assets/art/offlinelist.jpg)
   ![](app/src/main/assets/art/offlinelist-landscape.jpg)
   ![](app/src/main/assets/art/offlinelist-placeholder.jpg)
+
 - loading states.<br/><br/>
   ![](app/src/main/assets/art/loading-portrait.jpg)
   ![](app/src/main/assets/art/loading-landscape.jpg)
+
 - empty state<br/><br/>
   ![](app/src/main/assets/art/empty.jpg)
+
 - error state.<br/><br/>
   ![](app/src/main/assets/art/error.jpg)
 
@@ -50,10 +53,8 @@ requirements.
   - `View`
     - activity, viewModel, and jetpack compose components. The meat and potatoes of the frontend.
   - `Presenter`
-    - This is the layer that sits between the view and model, and is where I've embedded the '
-      business logic' of the app, so to speak.<br/><br/>
-      This class fetches and tabulates data from various repositories, and prepares them
-      for downstream consumption.<br/><br/>
+    - This is the layer that sits between the view and data sources, and is where I've embedded the `business logic` of the app, so to speak.<br/><br/>
+      This class tabulates data from various repositories and prepares them for downstream consumption.<br/>
       ViewModel receives the calls and routes user interactions to the presenter and remains
       agnostic of where the data comes from or how it is structured.<br/><br/>
       Presenter also lives independent of data storage technology and contains mostly high level
@@ -78,7 +79,7 @@ requirements.
 ### Tools and libraries
 
 - Activity, ViewModel, Jetpack compose, and material components for building the ui.
-- Coroutines concurrency.
+- Coroutines for concurrency.
 - StateFlow for reactive streams.
 - Room for local data storage.
 - Retrofit and Glide for fetching network resources.
@@ -87,8 +88,7 @@ requirements.
 
 ### UI and Unit Testing
 
-- I've added `11` unit tests for the `BookListPresenterImpl` and `BookListViewModel`. To make sure
-  the business logic is sound and app always ends up in the correct state.
+- There are `11` unit tests for the `BookListPresenterImpl` and `BookListViewModel`. To ensure that the app always ends up in the correct state.
 - I've also added the following jetpack compose `previews` in `BooksListContent` class.<br/><br/>
   ![](app/src/main/assets/art/preview-loading.jpg)
   ![](app/src/main/assets/art/preview-error.jpg)
@@ -98,17 +98,17 @@ requirements.
 
 ### Further improvements
 
-- the api key is currently hardcoded. This could of course be stored securely and fed to the remote
+- The api key is currently hardcoded. This could of course be stored securely and fed to the remote
   repository.
-- the api returns weekly data, it makes sense to remove the stale data when the timestamp is updated
+- The api returns weekly data. It makes sense to remove the stale data when the timestamp is updated
   from the response.
-- list heading, copyright message, and data timestamp can also be fed to the ui. This would require
+- List heading, copyright message, and data timestamp can also be fed to the ui. This would require
   saving more data in the database.
-- the api accepts an offset which would suggest that it supports pagination. This can be added later
+- The api accepts an offset which would suggest that it supports pagination. This can be added later
   as a feature to the list.
-- when in offline list mode, we can add a refresh button to the screen so the user can try get fresh
+- When in offline list mode, it would make sense for a refresh button to be on the screen so the user can try to get fresh
   data without having to nuke the app.
-- api returns an array of `buy links` for each item. It could be a useful ui feature 'purchase' or
+- The api returns an array of `buy links` for each item. It could be a useful ui feature to have a 'purchase'
   buttons for different online stores.
 
 # The Challenge:
