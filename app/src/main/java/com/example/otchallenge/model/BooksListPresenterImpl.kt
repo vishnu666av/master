@@ -6,7 +6,6 @@ import com.example.otchallenge.di.LocalRepository
 import com.example.otchallenge.di.RemoteRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.util.Date
 import javax.inject.Inject
 
 /**
@@ -33,22 +32,22 @@ class BooksListPresenterImpl @Inject constructor(
     private suspend fun getRemoteData(): BooksListDataState = try {
         val items = remoteRepository.all()
         if (items.isEmpty()) {
-            BooksListDataState.Empty(timestamp = Date())
+            BooksListDataState.Empty(timestamp = "")
         } else {
-            BooksListDataState.FreshList(items = items, timestamp = Date())
+            BooksListDataState.FreshList(items = items, timestamp = "")
         }
     } catch (e: Exception) {
-        BooksListDataState.Error(message = e.localizedMessage, timestamp = Date())
+        BooksListDataState.Error(message = e.localizedMessage, timestamp = "")
     }
 
     private suspend fun getLocalData(): BooksListDataState = try {
         val items = localRepository.all()
         if (items.isEmpty()) {
-            BooksListDataState.Empty(timestamp = Date())
+            BooksListDataState.Empty(timestamp = "")
         } else {
-            BooksListDataState.StaleList(items = items, timestamp = Date())
+            BooksListDataState.StaleList(items = items, timestamp = "")
         }
     } catch (e: Exception) {
-        BooksListDataState.Error(message = e.localizedMessage, timestamp = Date())
+        BooksListDataState.Error(message = e.localizedMessage, timestamp = "")
     }
 }

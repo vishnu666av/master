@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.util.Date
 import javax.inject.Inject
 
 
@@ -30,26 +29,21 @@ class BooksListViewModel @Inject constructor(private val presenter: BooksListPre
             _uiState.update {
                 when (val result = presenter.getBooks()) {
                     is BooksListDataState.Empty ->
-                        BooksListUiState.Empty(formatDate(result.timestamp))
+                        BooksListUiState.Empty(result.timestamp)
 
                     is BooksListDataState.Error -> BooksListUiState.Error
 
                     is BooksListDataState.FreshList -> BooksListUiState.OnlineList(
                         result.items.map { Book.fromBookDto(it) },
-                        formatDate(result.timestamp)
+                        result.timestamp
                     )
 
                     is BooksListDataState.StaleList -> BooksListUiState.OfflineList(
                         result.items.map { Book.fromBookDto(it) },
-                        formatDate(result.timestamp)
+                        result.timestamp
                     )
                 }
             }
         }
-    }
-
-    // todo: timestamps come as Date() from presenter, and need formatting here.
-    private fun formatDate(date: Date): String {
-        return date.toString()
     }
 }
