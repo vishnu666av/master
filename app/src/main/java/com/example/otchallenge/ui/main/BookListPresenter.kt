@@ -1,8 +1,6 @@
 package com.example.otchallenge.ui.main
 
-import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.example.otchallenge.data.database.BookEntity
 import com.example.otchallenge.data.repository.BookRepository
 import com.example.otchallenge.di.AppDispatchers
 import com.example.otchallenge.di.ApplicationScope
@@ -10,10 +8,8 @@ import com.example.otchallenge.di.Dispatcher
 import com.example.otchallenge.ui.components.NetworkMonitor
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -27,28 +23,33 @@ class BookListPresenter
         private val networkMonitor: NetworkMonitor,
     ) : BookListContract.BookListPresenter {
         private var view: BookListContract.BookListView? = null
-        override val pagingDataFlow: Flow<PagingData<BookEntity>> = repository.fetchPagedData().cachedIn(appScope)
 
-        override fun fetchBooks(page: Int) {
+        override fun listenToNetworkState() {
+            appScope.launch {
+                networkMonitor.isOnline.map {
+                    view?.onNetworkStateChanged(it)
+                }.collect()
+            }
+        }
+
+        override suspend fun fetchBooks(page: Int) {
             view?.showLoader()
             appScope.launch {
-            repository
-                .fetchPagedData()
-                /*.map { pagingData ->
-                    pagingData.map { it.toModel() }
-                }*/
-                .cachedIn(appScope)
-                .flowOn(ioDispatcher)
-                .map {
-                    view?.onLoadBooks(it)
-
+                try {
+                    repository
+                        .fetchPagedData()
+                        .cachedIn(appScope)
+                        .flowOn(ioDispatcher)
+                        .map {
+                            view?.onLoadBooks(it)
+                            view?.hideLoader()
+                        }.collect()
+                } catch (e: Throwable) {
+                    e.printStackTrace()
                     view?.hideLoader()
-                }.catch {
-                    it.printStackTrace()
-                    view?.hideLoader()
-                    view?.onError(it)
-                    }.collect()
+                    view?.onError(e)
                 }
+            }
         }
 
         override fun attachView(view: BookListContract.BookListView) {

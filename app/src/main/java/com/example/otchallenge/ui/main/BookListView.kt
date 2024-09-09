@@ -13,6 +13,7 @@ class BookListView
     constructor() : BookListContract.BookListView {
         private val _loading = MutableStateFlow(false)
         private val _error = MutableStateFlow(false)
+        private val _isOnline = MutableStateFlow(true)
         private val _data =
             MutableStateFlow<PagingData<BookEntity>>(
                 PagingData.empty(),
@@ -25,7 +26,7 @@ class BookListView
         override val paging: StateFlow<PagingData<BookEntity>> = _data.asStateFlow()
         override var loading: StateFlow<Boolean> = _loading.asStateFlow()
         override var error: StateFlow<Boolean> = _error.asStateFlow()
-
+    override var isOnline: StateFlow<Boolean> = _isOnline.asStateFlow()
         override fun onError(e: Throwable) {
             _error.update { true }
         }
@@ -38,7 +39,7 @@ class BookListView
             _loading.update { false }
         }
 
-        override fun onNetworkOff() {
-//            _uiState.update { ListResultUiState.NoNetwork }
+        override fun onNetworkStateChanged(isOnline: Boolean) {
+            _isOnline.update { isOnline }
         }
     }

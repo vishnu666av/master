@@ -5,4 +5,5 @@
     <string name="label_author">By: %s</string>
     <string name="label_image_thumbnail_description">Image Thumbnail</string>
     <string name="label_image_placeholder">No Image Available</string>
+    <string name="text_no_internet_state">You are offline</string>
 </resources>

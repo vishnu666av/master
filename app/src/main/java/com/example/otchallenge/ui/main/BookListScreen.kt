@@ -25,13 +25,15 @@ import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.PullToRefreshState
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -40,6 +42,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -49,6 +52,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LifecycleStartEffect
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
@@ -60,7 +64,6 @@ import com.example.otchallenge.data.database.BookEntity
 import com.example.otchallenge.data.database.toModel
 import com.example.otchallenge.data.models.Book
 import com.example.otchallenge.ui.theme.Typography
-import kotlinx.coroutines.delay
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
@@ -84,15 +87,17 @@ fun BookListScreen(
             presenter.detachView()
         }
     }
-
+    LaunchedEffect(Unit) {
+        presenter.listenToNetworkState()
+    }
     LaunchedEffect(Unit, page) {
         presenter.fetchBooks(page)
     }
 
-    val loading = view.loading.collectAsState().value
-    val error = view.error.collectAsState().value
+    val loading by view.loading.collectAsStateWithLifecycle()
+    val error by view.error.collectAsStateWithLifecycle()
     val data = view.paging.collectAsLazyPagingItems()
-
+    val snackbarHostState = remember { SnackbarHostState() }
     val pullToRefreshState =
         remember {
             object : PullToRefreshState {
@@ -114,6 +119,17 @@ fun BookListScreen(
                 }
             }
         }
+    val isOnline by view.isOnline.collectAsStateWithLifecycle()
+
+    LaunchedEffect(isOnline) {
+        if (!isOnline) {
+            snackbarHostState.showSnackbar(
+                message = R.string.text_no_internet_state.toString(),
+                duration = SnackbarDuration.Short,
+            )
+        }
+    }
+    NetworkChangeSnackbar(snackbarHostState)
     BookListContent(
         loading = loading,
         error = error,
@@ -164,6 +180,9 @@ internal fun BookListContent(
             isRefreshing = isRefreshing,
             onRefresh = onRefresh,
         ) {
+            if (data.itemCount == 0) {
+                item { EmptyListState() }
+            }
             items(data.itemCount, key = data.itemKey { it.isbn }) { index ->
                 val bookItem = data[index]
                 if (bookItem != null) {
@@ -254,6 +273,32 @@ private fun BookListItem(book: Book) {
             Text(
                 text = book.description,
                 style = Typography.bodyMedium,
+            )
+        }
+    }
+}
+
+@Composable
+fun NetworkChangeSnackbar(snackbarHostState: SnackbarHostState) {
+    SnackbarHost(hostState = snackbarHostState) {
+        Box(
+            modifier =
+                Modifier
+                    .fillMaxSize(),
+        ) {
+            Text(
+                modifier =
+                    Modifier
+                        .padding(4.dp)
+                        .fillMaxWidth()
+                        .padding(vertical = 30.dp)
+                        .graphicsLayer {
+                            shadowElevation = 5f
+                        }.padding(vertical = 10.dp),
+                text = stringResource(R.string.text_no_internet_state),
+                color = Color.White,
+                fontSize = 18.sp,
+                textAlign = TextAlign.Center,
             )
         }
     }
