@@ -21,8 +21,6 @@ class BookPagingMediator
     @Inject
     constructor(
         private val appDb: AppDatabase,
-//        private val bookDao: BookDao,
-//        private val remoteKeyDao: RemoteKeyDao,
         private val dataSource: BookDataSource,
         @Dispatcher(AppDispatchers.IO) private val ioDispatcher: CoroutineDispatcher,
     ) : RemoteMediator<Int, BookEntity>() {
