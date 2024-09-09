@@ -2,12 +2,13 @@ package com.example.otchallenge.data.network
 
 import android.util.Log
 import com.example.otchallenge.data.models.Book
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import com.example.otchallenge.data.models.EmptyArray
+import com.example.otchallenge.data.models.ResultWithData
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
 
@@ -51,13 +52,19 @@ class BookDataSource {
                             }
                             response
                         },
+                    ).addInterceptor(
+                        HttpLoggingInterceptor().apply {
+                            level = HttpLoggingInterceptor.Level.BODY
+                        },
                     ).build(),
             ).build()
             .create(BookApi::class.java)
 
-    fun fetchBooks(page: Int): Flow<List<Book>> =
-        flow {
-            val offset = page * 20 // offset (from the api documentation) is in multiples of 20
-            emit(bookApi.getBooks(offset).results.books)
+    suspend fun fetchBooks(page: Int): List<Book> {
+        val offset = page * 20 // offset (from the api documentation) is in multiples of 20
+        return when (val result = bookApi.getBooks(offset).results) {
+            EmptyArray -> emptyList()
+            is ResultWithData -> result.books
         }
+    }
 }
