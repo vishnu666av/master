@@ -9,8 +9,10 @@ Using this endpoint, show a list of these items, with each row displaying at lea
 - Description 
 
 ### Technical Instructions:
-- MVP architecture
+- MVP architecture, no ViewModel
+- XML Layouts (no Compose)
 - Demonstrate use of Dagger, Retrofit and Glide (for the images)
+- No database needed
 - Feel free to make any assumptions you want along the way or use any third party libraries as needed and document why you used them.
 
 ### General Instructions:
