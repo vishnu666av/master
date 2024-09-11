@@ -1,11 +1,19 @@
 package com.example.otchallenge.di
 
-import com.example.otchallenge.MainActivity
+import com.example.otchallenge.ui.bookslist.view.BooksListActivity
 import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component
+@Component(
+    modules = [
+        NetworkModule::class,
+        DatabaseModule::class,
+        RepositoryModule::class,
+        PresenterModule::class,
+        UseCaseModule::class
+    ]
+)
 interface AppComponent {
-	fun inject(activity: MainActivity)
+    fun inject(activity: BooksListActivity)
 }

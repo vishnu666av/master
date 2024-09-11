@@ -1,3 +1,9 @@
 <resources>
 	<string name="app_name">AndroidOTChallenge</string>
+    <string name="error_failed_to_fetch_list">Failed to fetch the list of books.</string>
+    <string name="error_no_items_found">There are no books in the list.</string>
+    <string name="label_offline_list">Offline list</string>
+    <string name="label_retry">Retry</string>
+    <string name="label_look_again">Look again!</string>
+    <string name="label_hard_cover_fictions">Hardcover Fictions</string>
 </resources>
