@@ -1,4 +1,4 @@
-package com.example.otchallenge.fixtures
+package com.example.otchallenge.utils
 
 import com.example.otchallenge.model.BookDto
 
@@ -7,8 +7,7 @@ fun BookDto.Companion.testPrototype() = BookDto(
     title = "book title",
     author = "book author",
     description = "book description",
-    imageUrl = "book imageUrk",
-    buyLinks = listOf()
+    imageUrl = "book imageUrk"
 )
 
 fun BookDto.Companion.testPrototypeList() = listOf(testPrototype())
