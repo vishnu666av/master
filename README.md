@@ -1,24 +1,24 @@
 ## The Solution Writeup
 
-**Hey! Farhad here.** <br/>I'll be explaining how I developed the app to meet the challenge
-requirements.
+**Hey! Farhad here.** <br/>This is an updated implementation of the challenge, using MVP
+architecture, dagger2, and
+without viewModels.
 
 ### Features of the app
 
 - displaying list of hardcover fictions from the NY Times api.
 - displaying the book cover image, with placeholder fallback.
-- saving the books in a local database to support offline mode.
 - caching images of the book covers to support offline mode.
 - displaying shimmering rows while books are being fetched.
-- displaying an error message when the app fails to retrieve any data from api and database and a
-  button to retry.
+- displaying an error message when the app fails to retrieve any data from api and a button to
+  retry.
 - displaying a message when the books list is empty and a button to retry.
 - supporting display in portrait and landscape mode.
 
-### Talk is cheap. Show me how it works.
+### Screen Recording
 
 - Here's a screen recording of the app going through different states after a fresh
-  install: [![](docs/play.png)](docs/demo.webm)
+  install: [![](docs/play.png)](docs/updated-demo.webm)
 
 ### Screens Gallery
 
@@ -26,11 +26,6 @@ requirements.
   ![](docs/onlinelist.jpg)
   ![](docs/onlinelist-landscape.jpg)
   ![](docs/onlinelist-placeholder-cover.jpg)
-
-- offline list states (notice the book cover placeholder when image loading fails).<br/><br/>
-  ![](docs/offlinelist.jpg)
-  ![](docs/offlinelist-landscape.jpg)
-  ![](docs/offlinelist-placeholder.jpg)
 
 - loading states.<br/><br/>
   ![](docs/loading-portrait.jpg)
@@ -44,79 +39,78 @@ requirements.
 
 ### Architecture
 
-- As mentioned in the challenge statement, I've adopted MVP architecture in my development. Here's
-  how
-  different layers and tools fit into the MVP architecture.
+- the code is arranged based on MVP clean architecture practices.
+  Here are how different layers and classes fit into the architecture.
   - `Model`
-    - fundamental `Book` model class and the different states that a list fetch operation would end
-      in.
-  - `View`
-    - activity, viewModel, and jetpack compose components. The meat and potatoes of the frontend.
-  - `Presenter`
-    - This is the layer that sits between the view and data sources, and is where I've embedded
-      the `business logic` of the app, so to speak.<br/><br/>
-      This class tabulates data from various repositories and prepares them for downstream
-      consumption.<br/>
-      ViewModel receives the calls and routes user interactions to the presenter and remains
-      agnostic of where the data comes from or how it is structured.<br/><br/>
-      Presenter also lives independent of data storage technology and contains mostly high level
-      domain logic.<br/><br/>
-    - Local and remote repositories, a.k.a database and web api interface, are abstracted away from
-      the presenter through the Repository interface.<br/>
-      They're not an official layer per se, but they are the gateway to the execution & storage
-      environment which is the Android OS. So they're kept as far away from the domain code as
+    - The `data` package embeds where the data comes from.
+    - Abstractions of web api interface and local database, as well their implementations can be
+      found in this package.
+
+  - `Usecase`
+    - The `usecase` layer is the place to encapsulate high level business logic of the app. In my
+      implementation
+      it gathers data from various repositories and prepares the result.
+    - Local and remote repositories, are abstracted away from
+      the usecase through the Repository interface.<br/>
+      They're the gateway to the execution & storage environment, so they're kept as far away from
+      the domain code as
       possible.
+
+  - `View & Presenter`
+    - The `ui` package groups the view code by features. Each feature subpackage consists of view
+      and presenter classes.
+    - BooksList ui is implemented using an activity and jetpack compose components.
+    - Presenter builds the ui state by utilizing an injected usecase class, that has all the
+      business logic and data tabulation embedded in it.
+    - Presenter translates, or maps, the results of usecase actions into the `UiState`.
+    - `UiState` and `UseCaseResult` share terminology but have different consumers and can have
+      independent lifecycles.
 
 ### Architectural Practices and Design Patterns
 
+- Adopted clean architecture principles in MVP implementation.
 - Avoided creating smart or God objects, adhering to single-responsibility classes.
-- Unidirectional data flow and single source of truth, through `data` package and `Repository`
+- Unidirectional data flow and single source of truth, through `model` package and `Repository`
   interface.
+- Utilized UseCases to embed domain and business logic implementation, as opposed to hard-coupling
+  it with presenter code.
 - Using interfaces to enforce Liskov Substitution Principle (LSP), creating easily-testable and
   replaceable implementations.
   This would allow different layers to grow mostly in isolation of each other. For instance, the
   adoption of a new networking library should not leak into irrelevant layers of the architecture.
 - Dagger2 for dependency injection and enforcing separation of concerns across layers.
 
-### [WIP]handling configuration changes in MVP
+### Handling configuration changes
 
-- retain activity or fragment instance (Manifest)
-  - onRetainInstance
-- using viewModel to get a hold of Presenter instance
-- retaining Presenter in activity instance -> cause memory leaks
-  - if process is killed we can't restore state
-- retains the uiState in the bundle and ask the presenter to restore it
-- how ViewModels are lifecycle-aware? we can reuse that too
-- caching network requests or saving data in database
-- using onConfigurationChange callback
-- XXX how about fragments
-- using dagger2
-  - we can mark Presenter as singleton
-  - we can scope the Presenter to @PerActivity or @PerScreen
-- what I've chosen to do
-  - use dagger2 to inject a singleton instance of Presenter
-  - call onViewAttached() from activity when it's created for the first time
-  - further enhancements
-    - cache network resources
-    - save data in a database
-    - in case of multiple fragments, we can scope the presenter to either @PerActivity or
-      @PerScreen
-    -
+- The app is developed in such a way to preserve its state during and after a configuration change.
+- It accomplishes this by using a singleton instance of the Presenter (enforced at DI level),
+  and making sure the view (activity) only attaches itself to the presenter at first time of
+  creation.
+- Subsequent device rotations will not retain the activity instance, however, as the Presenter is
+  singleton and
+  view checks whether it needs to 're-attach' itself, ui state is remembered and app does not crash.
+- The app does not cache any retrofit responses. Although the local database pipeline is wired in,
+  currently no data is saved in the local database.
 
 ### [REASONS] Tools and libraries
 
-- Activity, ViewModel, Jetpack compose, and material components for building the ui.
+- Activity, Jetpack compose, and material components for building the ui
+  - using RecyclerView, ConstraintLayout and DataBinding would have been possible too,
+    had it been documented in a timely manner.
 - Coroutines for concurrency.
-- StateFlow for reactive streams.
-- Room for local data storage.
+- LiveData for sending data updates from presenter to view asynchronously and reactively.
 - Retrofit and Glide for fetching network resources.
 - Moshi for serialization.
 - Junit and Mockito for unit testing.
 
-### UI and Unit Testing
+### Unit Testing
 
-- There are `11` unit tests for the `BookListPresenterImpl` and `BookListViewModel`. To ensure that
-  the app always ends up in the correct state.
+- `BooksListPresenterTest` and `BooksListUseCaseTest` verify the app's state changes according to
+  data sources, from data layer all the way through presenter.
+
+### UI Testing
+
+- No App crashes or ANRs happening on the app.
 - I've also added the following jetpack compose `previews` in `BooksListContent` class.<br/><br/>
   ![](docs/preview-loading.jpg)
   ![](docs/preview-error.jpg)
