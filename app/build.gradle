@@ -1,7 +1,7 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.jetbrains.kotlin.android)
-    alias(libs.plugins.kapt)
+    alias libs.plugins.android.application
+    alias libs.plugins.jetbrains.kotlin.android
+    alias libs.plugins.kapt
 }
 
 android {
@@ -16,6 +16,14 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion "1.5.3"
     }
 
     buildTypes {
@@ -39,24 +47,43 @@ dependencies {
     implementation libs.androidx.appcompat
     implementation libs.material
     implementation libs.androidx.activity
-    implementation libs.androidx.constraintlayout
+    implementation libs.androidx.runtime.livedata
+
     // dagger
     implementation libs.dagger
     kapt libs.dagger.compiler
 
-    //retrofit
+    // compose
+    implementation libs.compose.ui
+    implementation libs.compose.material3
+    implementation libs.compose.ui.tooling.preview
+    debugImplementation libs.compose.ui.tooling
+    implementation libs.compose.foundation
+    implementation libs.compose.viewmodel
+    implementation libs.activity.compose
+
+    // retrofit
     implementation libs.retrofit
-    implementation libs.retrofit.rx.adapter
+    implementation libs.okhttp.logging
+    implementation libs.retrofit.moshi
+    implementation libs.moshi
+    implementation libs.moshi.kotlin
 
-    //glide
+    // room
+    implementation libs.room.runtime
+    kapt libs.room.compiler
+    implementation libs.room.ktx
+
+    // glide
     implementation libs.glide
-
-    //reactive x
-    implementation libs.rx.android
-    implementation libs.rx.java
-    implementation libs.rx.kotlin
+    kapt libs.glide.compiler
 
     testImplementation libs.junit
+    testImplementation libs.arch.core.testing
+    testImplementation libs.kotlinx.coroutines.test
+    testImplementation libs.mockito.core
+    testImplementation libs.mockito.inline
     androidTestImplementation libs.androidx.junit
     androidTestImplementation libs.androidx.espresso.core
+    androidTestImplementation libs.compose.ui.test.junit4
 }
