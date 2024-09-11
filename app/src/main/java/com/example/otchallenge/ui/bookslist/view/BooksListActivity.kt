@@ -2,6 +2,7 @@ package com.example.otchallenge.ui.bookslist.view
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.Crossfade
@@ -17,12 +18,10 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.RequestManager
 import com.example.otchallenge.BooksApp
 import com.example.otchallenge.ui.bookslist.presenter.BooksListUiState
 import com.example.otchallenge.ui.bookslist.presenter.IBooksListPresenter
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class BooksListActivity : ComponentActivity(), BookListView {
@@ -55,9 +54,7 @@ class BooksListActivity : ComponentActivity(), BookListView {
                         BooksListContent(
                             uiState = it ?: BooksListUiState.Error,
                             imageLoader = imageLoader,
-                            onRetryCta = {
-                                lifecycleScope.launch { presenter.getBooks() }
-                            },
+                            onRetryCta = { presenter.getBooks() },
                             modifier = Modifier.padding(vertical = 16.dp)
                         )
                     }
@@ -67,8 +64,14 @@ class BooksListActivity : ComponentActivity(), BookListView {
 
         if (savedInstanceState == null) {
             presenter.onViewAttached(this@BooksListActivity)
-            lifecycleScope.launch { presenter.getBooks() }
         }
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                presenter.onViewDetached()
+                finish()
+            }
+        })
     }
 
     override fun getLifecycleOwner(): LifecycleOwner = this

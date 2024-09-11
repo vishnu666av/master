@@ -11,7 +11,8 @@ import javax.inject.Singleton
         DatabaseModule::class,
         RepositoryModule::class,
         PresenterModule::class,
-        UseCaseModule::class
+        UseCaseModule::class,
+        CoroutineModule::class
     ]
 )
 interface AppComponent {

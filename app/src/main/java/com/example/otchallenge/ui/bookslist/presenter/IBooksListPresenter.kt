@@ -9,5 +9,7 @@ interface IBooksListPresenter {
 
     fun onViewAttached(view: BookListView)
 
-    suspend fun getBooks()
+    fun getBooks()
+
+    fun onViewDetached()
 }

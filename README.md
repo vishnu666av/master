@@ -86,13 +86,17 @@ without viewModels.
 - It accomplishes this by using a singleton instance of the Presenter (enforced at DI level),
   and making sure the view (activity) only attaches itself to the presenter at first time of
   creation.
-- Subsequent device rotations will not retain the activity instance, however, as the Presenter is
-  singleton and
+- There is no special treatment to prevent activity recreation in place, so subsequent device
+  rotations will not retain the activity instance.
+- However, as the Presenter is singleton and
   view checks whether it needs to 're-attach' itself, ui state is remembered and app does not crash.
+- When the user presses back button, the presenter is detached from the view and all the ongoing api
+  calls are aborted.
+  We can't use the onDestroy() call because the activity instance is not retained.
 - The app does not cache any retrofit responses. Although the local database pipeline is wired in,
-  currently no data is saved in the local database.
+  currently no data is saved in it.
 
-### [REASONS] Tools and libraries
+### Tools and libraries
 
 - Activity, Jetpack compose, and material components for building the ui
   - using RecyclerView, ConstraintLayout and DataBinding would have been possible too,

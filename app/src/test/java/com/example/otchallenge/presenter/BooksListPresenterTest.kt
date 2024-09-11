@@ -6,12 +6,13 @@ import com.example.otchallenge.model.Repository
 import com.example.otchallenge.ui.bookslist.presenter.BooksListPresenter
 import com.example.otchallenge.ui.bookslist.presenter.BooksListUiState
 import com.example.otchallenge.usecase.BooksListUseCase
-import com.example.otchallenge.utils.testObserve
 import com.example.otchallenge.utils.testPrototype
 import com.example.otchallenge.utils.testPrototypeList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.Before
@@ -69,22 +70,30 @@ class BooksListPresenterTest {
 
     @Test
     fun when_remote_repository_has_data_then_presenter_online_list_state() =
-        runTest(testDispatcher) {
+        runTest {
             // Arrange
             `when`(localRepository.all()).thenThrow(IllegalStateException())
             `when`(remoteRepository.all()).thenReturn(BookDto.testPrototypeList())
 
             val useCase = BooksListUseCase(localRepository, remoteRepository)
-            val presenter = BooksListPresenter(useCase)
+            val presenter = BooksListPresenter(useCase, testDispatcher, testDispatcher)
 
             // Act
-            presenter.getBooks()
-            val uiState = presenter.uiState.testObserve()
+            var uiState: BooksListUiState? = null
+            val job = launch {
+                presenter.uiState.observeForever {
+                    uiState = it
+                }
+                presenter.getBooks()
+            }
+
+            advanceUntilIdle()
+            job.cancel()
 
             // Assert
             assert(uiState is BooksListUiState.OnlineList)
             assert((uiState as BooksListUiState.OnlineList).items.size == 1)
-            assert(uiState.items[0] == BookDto.testPrototype())
+            assert((uiState as BooksListUiState.OnlineList).items[0] == BookDto.testPrototype())
         }
 
     @Test
@@ -95,17 +104,24 @@ class BooksListPresenterTest {
             `when`(remoteRepository.all()).thenReturn(listOf())
 
             val useCase = BooksListUseCase(localRepository, remoteRepository)
-            val presenter = BooksListPresenter(useCase)
+            val presenter = BooksListPresenter(useCase, testDispatcher, testDispatcher)
 
             // Act
-            presenter.getBooks()
-            val uiState = presenter.uiState.testObserve()
+            var uiState: BooksListUiState? = null
+            val job = launch {
+                presenter.uiState.observeForever {
+                    uiState = it
+                }
+                presenter.getBooks()
+            }
+
+            advanceUntilIdle()
+            job.cancel()
 
             // Assert
             assert(uiState is BooksListUiState.OfflineList)
-            uiState as BooksListUiState.OfflineList
-            assert(uiState.items.size == 1)
-            assert(uiState.items[0] == BookDto.testPrototype())
+            assert((uiState as BooksListUiState.OfflineList).items.size == 1)
+            assert((uiState as BooksListUiState.OfflineList).items[0] == BookDto.testPrototype())
         }
 
     @Test
@@ -116,11 +132,19 @@ class BooksListPresenterTest {
             `when`(remoteRepository.all()).thenThrow(IllegalStateException())
 
             val useCase = BooksListUseCase(localRepository, remoteRepository)
-            val presenter = BooksListPresenter(useCase)
+            val presenter = BooksListPresenter(useCase, testDispatcher, testDispatcher)
 
             // Act
-            presenter.getBooks()
-            val uiState = presenter.uiState.testObserve()
+            var uiState: BooksListUiState? = null
+            val job = launch {
+                presenter.uiState.observeForever {
+                    uiState = it
+                }
+                presenter.getBooks()
+            }
+
+            advanceUntilIdle()
+            job.cancel()
 
             // Assert
             assert(uiState is BooksListUiState.Empty)
@@ -134,17 +158,24 @@ class BooksListPresenterTest {
             `when`(remoteRepository.all()).thenReturn(listOf())
 
             val useCase = BooksListUseCase(localRepository, remoteRepository)
-            val presenter = BooksListPresenter(useCase)
+            val presenter = BooksListPresenter(useCase, testDispatcher, testDispatcher)
 
             // Act
-            presenter.getBooks()
-            val uiState = presenter.uiState.testObserve()
+            var uiState: BooksListUiState? = null
+            val job = launch {
+                presenter.uiState.observeForever {
+                    uiState = it
+                }
+                presenter.getBooks()
+            }
+
+            advanceUntilIdle()
+            job.cancel()
 
             // Assert
             assert(uiState is BooksListUiState.OfflineList)
-            uiState as BooksListUiState.OfflineList
-            assert(uiState.items.size == 1)
-            assert(uiState.items[0] == BookDto.testPrototype())
+            assert((uiState as BooksListUiState.OfflineList).items.size == 1)
+            assert((uiState as BooksListUiState.OfflineList).items[0] == BookDto.testPrototype())
         }
 
     @Test
@@ -155,16 +186,24 @@ class BooksListPresenterTest {
             `when`(remoteRepository.all()).thenThrow(IllegalStateException())
 
             val useCase = BooksListUseCase(localRepository, remoteRepository)
-            val presenter = BooksListPresenter(useCase)
+            val presenter = BooksListPresenter(useCase, testDispatcher, testDispatcher)
 
             // Act
-            presenter.getBooks()
-            val uiState = presenter.uiState.testObserve()
+            var uiState: BooksListUiState? = null
+            val job = launch {
+                presenter.uiState.observeForever {
+                    uiState = it
+                }
+                presenter.getBooks()
+            }
+
+            advanceUntilIdle()
+            job.cancel()
 
             // Assert
             assert(uiState is BooksListUiState.OfflineList)
             uiState as BooksListUiState.OfflineList
-            assert(uiState.items.size == 1)
-            assert(uiState.items[0] == BookDto.testPrototype())
+            assert((uiState as BooksListUiState.OfflineList).items.size == 1)
+            assert((uiState as BooksListUiState.OfflineList).items[0] == BookDto.testPrototype())
         }
 }
