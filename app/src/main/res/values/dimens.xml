@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="space_xs">4dp</dimen>
+    <dimen name="space_s">8dp</dimen>
+    <dimen name="space_m">16dp</dimen>
+    <dimen name="space_l">30dp</dimen>
+    <dimen name="padding_m">16dp</dimen>
+    <dimen name="card_corner_radius">8dp</dimen>
+    <dimen name="book_image_width">100dp</dimen>
+    <dimen name="book_image_height">150dp</dimen>
+    <dimen name="text_s">8sp</dimen>
+    <dimen name="text_m">16sp</dimen>
+    <dimen name="text_l">25sp</dimen>
+</resources>
