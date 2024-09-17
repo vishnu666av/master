@@ -1,6 +1,6 @@
 [versions]
 agp = "8.4.2"
-kotlin = "1.9.0"
+kotlin = "2.0.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.1.5"
@@ -9,12 +9,24 @@ appcompat = "1.7.0"
 material = "1.12.0"
 activity = "1.9.0"
 constraintlayout = "2.1.4"
-dagger = "2.51.1"
+hilt = "2.51.1"
 retrofit = "2.11.0"
 glide = "4.16.0"
 rx-android = "2.1.1"
 rx-java = "2.2.21"
 rx-kotlin = "2.4.0"
+ksp = "2.0.0-1.0.24"
+moshi = "1.15.1"
+mockitoCore = "5.12.0"
+mockitoInline = "5.2.0"
+mockitoKotlinVersion = "5.2.0"
+lifecycleViewmodelKtx = "2.8.4"
+navigationFragmentKtx = "2.7.7"
+navigationUiKtx = "2.7.7"
+swiperefreshlayout = "1.2.0-alpha01"
+kotlinxCoroutinesTest = "1.8.1"
+coreTesting = "2.2.0"
+mockk = "1.12.4"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -25,17 +37,31 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
-dagger = { group = "com.google.dagger", name = "dagger", version.ref = "dagger" }
-dagger-compiler = { group = "com.google.dagger", name = "dagger-compiler", version.ref = "dagger" }
+androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
+androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationUiKtx" }
+androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
+hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-rx-adapter = { group = "com.squareup.retrofit2", name = "adapter-rxjava2", version.ref = "retrofit" }
+retrofit-converter-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
+moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
+moshi-kotlin-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
-rx-java = {group = "io.reactivex.rxjava2", name="rxjava", version.ref = "rx-java"}
-rx-android = {group = "io.reactivex.rxjava2", name="rxandroid", version.ref = "rx-android"}
-rx-kotlin = {group = "io.reactivex.rxjava2", name="rxkotlin", version.ref = "rx-kotlin"}
+rx-java = { group = "io.reactivex.rxjava2", name = "rxjava", version.ref = "rx-java" }
+rx-android = { group = "io.reactivex.rxjava2", name = "rxandroid", version.ref = "rx-android" }
+rx-kotlin = { group = "io.reactivex.rxjava2", name = "rxkotlin", version.ref = "rx-kotlin" }
+mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockitoCore" }
+mockito-inline = { module = "org.mockito:mockito-inline", version.ref = "mockitoInline" }
+mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockitoKotlinVersion" }
+androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swiperefreshlayout" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
+androidx-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "coreTesting" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
-
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }

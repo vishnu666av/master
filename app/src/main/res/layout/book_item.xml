@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="bookUIModel"
+            type="com.example.otchallenge.domain.BookUIModel" />
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/spacing_medium"
+        android:layout_marginTop="@dimen/spacing_medium"
+        app:cardBackgroundColor="@color/light_grey"
+        app:cardCornerRadius="@dimen/spacing_small">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/spacing_medium">
+
+            <TextView
+                android:id="@+id/rank_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{bookUIModel.rank}"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_xll"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="21" />
+
+            <LinearLayout
+                android:layout_width="@dimen/none"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/spacing_medium"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/photo_iv"
+                app:layout_constraintStart_toEndOf="@+id/rank_tv"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0">
+
+                <TextView
+                    android:id="@+id/weeks_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text='@{bookUIModel.weeksOnListText}'
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_small"
+                    tools:text="@tools:sample/full_names" />
+
+                <TextView
+                    android:id="@+id/title_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_xxs"
+                    android:text="@{bookUIModel.title}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_large"
+                    android:textStyle="bold"
+                    tools:text="@tools:sample/full_names" />
+
+                <TextView
+                    android:id="@+id/author_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_xxs"
+                    android:text="@{bookUIModel.authorAndPublisherText}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_medium"
+                    tools:text="@tools:sample/lorem" />
+
+                <TextView
+                    android:id="@+id/description_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_xxs"
+                    android:text="@{bookUIModel.description}"
+                    android:textSize="@dimen/font_small"
+                    tools:text="@tools:sample/lorem" />
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/photo_iv"
+                android:layout_width="@dimen/image_size_medium"
+                android:layout_height="wrap_content"
+                android:imageUrl="@{bookUIModel.bookImage}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@tools:sample/avatars" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>

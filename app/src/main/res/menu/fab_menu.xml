@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_default"
+        android:title="Default" />
+    <item
+        android:id="@+id/action_loading"
+        android:title="Loading" />
+    <item
+        android:id="@+id/action_empty"
+        android:title="Empty" />
+    <item
+        android:id="@+id/action_error"
+        android:title="Error" />
+</menu>
