@@ -45,3 +45,11 @@ To record new screenshots, run from root folder
 ```shell
 ./gradlew recordPaparazziDebug
 ```
+
+## Command to format, test and build debug app
+
+A custom Gradle task has been created to easy of use that would execute all important tasks for the build
+
+```shell
+./gradlew formatTestAssemble
+```

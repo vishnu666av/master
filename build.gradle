@@ -17,3 +17,19 @@ subprojects {
         }
     }
 }
+
+tasks.register("formatTestAssemble") {
+    dependsOn(
+            subprojects.collect { subproject ->
+                [
+                        subproject.tasks.named("verifyPaparazziDebug"),
+                        subproject.tasks.named("spotlessApply"),
+                        subproject.tasks.named("spotlessCheck"),
+                        subproject.tasks.named("testDebugUnitTest"),
+                        subproject.tasks.named("connectedDebugAndroidTest"),
+                        subproject.tasks.named("assembleDebug")
+                ]
+            }.flatten())
+    group = "Build"
+    description = "Runs Paparazzi, Spotless, unit tests, instrumentation tests, and assembles the debug build."
+}
