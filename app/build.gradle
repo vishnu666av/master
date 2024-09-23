@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.kapt)
+    alias(libs.plugins.paparazzi)
 }
 
 android {
@@ -17,12 +18,20 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    buildFeatures {
+        viewBinding true
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -40,18 +49,22 @@ dependencies {
     implementation libs.material
     implementation libs.androidx.activity.ktx
     implementation libs.androidx.fragment.ktx
+    implementation libs.androidx.navigation.fragment.ktx
+    implementation libs.androidx.navigation.ui.ktx
     implementation libs.androidx.constraintlayout
+
     // dagger
     implementation libs.dagger
+    implementation libs.androidx.recyclerview
     kapt libs.dagger.compiler
 
-    //retrofit
+    // retrofit
     implementation libs.retrofit
 
-    //glide
+    // glide
     implementation libs.glide
 
-    //coroutines
+    // coroutines
     implementation libs.kotlinx.coroutines
 
     testImplementation libs.junit

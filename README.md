@@ -13,3 +13,20 @@ This is a simple Android app that exercises a REST-ful API and shows a list of d
 - Dagger for dependency injection
 - Glide for image loading
 - Retrofit for networking
+
+## Screenshot Testing
+
+This app uses [Paparazzi](https://cashapp.github.io/paparazzi/) to perform snapshot testing.
+
+Look at `BookListItemSnapshotTest.kt` for reference. It captures various snapshots that cover phone
+UI, tablet UI, day and night mode, font scaling for accessibility etc.
+
+To verify the screenshots, run from root folder
+```shell
+./gradlew verifyPaparazziDebug
+```
+
+To record new screenshots, run from root folder
+```shell
+./gradlew recordPaparazziDebug
+```
