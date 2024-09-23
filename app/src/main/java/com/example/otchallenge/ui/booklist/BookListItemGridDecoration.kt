@@ -6,6 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.otchallenge.R
 import kotlin.math.roundToInt
 
+/**
+ * [RecyclerView.ItemDecoration] to use with screens larger than 600 dp wide. So definitely tablets,
+ * and also some phones when in landscape mode
+ */
 class BookListItemGridDecoration : RecyclerView.ItemDecoration() {
 
     override fun getItemOffsets(

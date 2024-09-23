@@ -15,14 +15,20 @@ import com.example.otchallenge.databinding.ViewBookListItemBinding
 /**
  * Change this adapter to [ListAdapter] if data is not static anymore
  */
-class BookListRecyclerViewAdapter(
-    private val values: List<Book>
-) : RecyclerView.Adapter<BookListRecyclerViewAdapter.ViewHolder>() {
+class BookListRecyclerViewAdapter : RecyclerView.Adapter<BookListRecyclerViewAdapter.ViewHolder>() {
+
+    private val values: MutableList<Book> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             ViewBookListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
+    }
+
+    fun addBooks(books: List<Book>) {
+        val itemCount = values.size
+        values.addAll(books)
+        notifyItemRangeInserted(itemCount, books.size)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

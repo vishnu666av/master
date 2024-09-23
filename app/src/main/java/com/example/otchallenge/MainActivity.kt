@@ -9,12 +9,18 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.otchallenge.databinding.ActivityMainBinding
+import com.example.otchallenge.util.logD
 
 class MainActivity : AppCompatActivity() {
+
+    companion object {
+        private const val TAG = "MainActivity"
+    }
 
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        logD("$TAG - onCreate")
         (application as MyApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -28,12 +34,16 @@ class MainActivity : AppCompatActivity() {
         setupActionBarNavController()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        logD("$TAG - onDestroy")
+    }
+
     private fun setupActionBarNavController() {
         setSupportActionBar(binding.toolbar)
         val navController =
             binding.content.navHostContainer.getFragment<NavHostFragment>().navController
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
-
     }
 }

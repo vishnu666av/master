@@ -6,6 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.otchallenge.R
 import kotlin.math.roundToInt
 
+/**
+ * [RecyclerView.ItemDecoration] to use with screens smaller than 600 dp wide.
+ */
 class BookListItemLinearDecoration : RecyclerView.ItemDecoration() {
 
     override fun getItemOffsets(

@@ -4,7 +4,7 @@ This is a simple Android app that exercises a REST-ful API and shows a list of d
 
 ## System Requirement:
 
-- App tested with Android Studio Koala (Stable release)
+- App tested with `Android Studio Koala Feature Drop | 2024.1.2 Patch 1`
 
 ## Important Dependencies
 
@@ -13,6 +13,20 @@ This is a simple Android app that exercises a REST-ful API and shows a list of d
 - Dagger for dependency injection
 - Glide for image loading
 - Retrofit for networking
+- KotlinX Serialization for serializing data
+- Paparazzi for snapshot testing
+
+## App Screenshots
+
+### Phone - Pixel 8a
+
+| Portrait                     | Landscape                         |
+|------------------------------|-----------------------------------|
+| ![](screenshot_pixel_8a.png) | ![](screenshot_pixel_8a_land.png) |
+
+### Tablet - Pixel Tablet
+
+![](screenshot_pixel_tablet.png)
 
 ## Screenshot Testing
 

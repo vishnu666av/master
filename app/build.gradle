@@ -2,8 +2,14 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.kapt)
+    alias(libs.plugins.serialization)
     alias(libs.plugins.paparazzi)
 }
+
+// TODO This is never a good idea to put API KEY here and push it to version control
+//  Use Google's secrets Gradle plugin https://github.com/google/secrets-gradle-plugin
+//  for better way to do this.
+def apiKey = "KoRB4K5LRHygfjCL2AH6iQ7NeUqDAGAB"
 
 android {
     namespace 'com.example.otchallenge'
@@ -15,8 +21,8 @@ android {
         targetSdk 35
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "NYTIMES_API_KEY", "\"${apiKey}\"")
     }
     testOptions {
         unitTests {
@@ -31,6 +37,7 @@ android {
         }
     }
     buildFeatures {
+        buildConfig true
         viewBinding true
     }
     compileOptions {
@@ -60,12 +67,18 @@ dependencies {
 
     // retrofit
     implementation libs.retrofit
+    implementation libs.retrofit.kotlinx.serializatoin
+    implementation libs.okhttp
+    implementation libs.okttp.logging
 
     // glide
     implementation libs.glide
 
     // coroutines
     implementation libs.kotlinx.coroutines
+
+    // serialization
+    implementation libs.kotlinx.serialization
 
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit
