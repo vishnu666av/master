@@ -15,6 +15,7 @@ This is a simple Android app that exercises a REST-ful API and shows a list of d
 - Retrofit for networking
 - KotlinX Serialization for serializing data
 - Paparazzi for snapshot testing
+- Timber for logging
 
 ## App Screenshots
 

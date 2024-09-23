@@ -1,7 +1,7 @@
 package com.example.otchallenge.ui.booklist
 
 import com.example.otchallenge.data.BookRepository
-import com.example.otchallenge.util.logD
+import com.example.otchallenge.util.logDebug
 import javax.inject.Inject
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -26,7 +26,7 @@ class BookListPresenter @Inject constructor(private val bookRepository: BookRepo
         private set
 
     init {
-        logD("$TAG - Init")
+        logDebug("$TAG - Init")
     }
 
     fun attachView(view: BookListView) {
@@ -64,7 +64,7 @@ class BookListPresenter @Inject constructor(private val bookRepository: BookRepo
                 view?.addBooks(books)
                 currentOffset += PAGE_SIZE
                 hasMoreData = books.size >= PAGE_SIZE
-                logD("$TAG - hasMoreData: $hasMoreData")
+                logDebug("$TAG - hasMoreData: $hasMoreData")
             } else {
                 if (currentOffset == 0) {
                     view?.showError("Error loading initial books")

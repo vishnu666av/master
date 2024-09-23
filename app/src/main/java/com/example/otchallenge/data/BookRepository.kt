@@ -2,8 +2,8 @@ package com.example.otchallenge.data
 
 import com.example.otchallenge.BuildConfig
 import com.example.otchallenge.api.NycApiService
-import com.example.otchallenge.util.logD
-import com.example.otchallenge.util.logE
+import com.example.otchallenge.util.logDebug
+import com.example.otchallenge.util.logError
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -11,14 +11,14 @@ import javax.inject.Singleton
 class BookRepository @Inject constructor(private val nycApiService: NycApiService) {
 
     init {
-        logD("BookRepository - Singleton Init")
+        logDebug("BookRepository - Singleton Init")
     }
 
     private val offsetToBookMap = mutableMapOf<Int, List<Book>>()
     suspend fun getBooks(offset: Int): Result<List<Book>> {
         val cachedResult = getFromLocalCache(offset)
         if (cachedResult != null) {
-            logD("BookRepository - Returning CachedResult for offset: $offset")
+            logDebug("BookRepository - Returning CachedResult for offset: $offset")
             return cachedResult
         } else {
             return try {
@@ -32,7 +32,7 @@ class BookRepository @Inject constructor(private val nycApiService: NycApiServic
                     Result.success(it)
                 }
             } catch (e: Exception) {
-                logE(e.stackTraceToString(), e)
+                logError(e.stackTraceToString(), e)
                 Result.failure(e)
             }
         }

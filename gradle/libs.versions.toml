@@ -16,6 +16,7 @@ navigationUi = "2.8.1"
 recyclerview = "1.3.2"
 kotlinx-serialization = "1.7.3"
 okhttp = "4.12.0"
+timber = "4.7.1"
 
 ## Testing
 espressoCore = "3.6.1"
@@ -24,6 +25,7 @@ junitVersion = "1.2.1"
 paparazzi = "1.3.4"
 
 [libraries]
+timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 okttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 kotlinx-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization" }

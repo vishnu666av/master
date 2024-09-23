@@ -9,7 +9,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.otchallenge.databinding.ActivityMainBinding
-import com.example.otchallenge.util.logD
+import com.example.otchallenge.util.logDebug
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        logD("$TAG - onCreate")
+        logDebug("$TAG - onCreate")
         (application as MyApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        logD("$TAG - onDestroy")
+        logDebug("$TAG - onDestroy")
     }
 
     private fun setupActionBarNavController() {

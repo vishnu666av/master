@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.BundleCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +15,7 @@ import com.example.otchallenge.MyApplication
 import com.example.otchallenge.R
 import com.example.otchallenge.data.Book
 import com.example.otchallenge.databinding.FragmentBookListBinding
-import com.example.otchallenge.util.logD
+import com.example.otchallenge.util.logDebug
 import com.google.android.material.snackbar.Snackbar
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
@@ -55,7 +54,7 @@ class BookListFragment : Fragment(), BookListView {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        logD("BookListFragment - onCreateView")
+        logDebug("BookListFragment - onCreateView")
         _binding = FragmentBookListBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -74,7 +73,7 @@ class BookListFragment : Fragment(), BookListView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        logD("$TAG - onViewCreated")
+        logDebug("$TAG - onViewCreated")
         (requireActivity().application as MyApplication).appComponent.inject(this)
         presenter.attachView(this)
         val columnCount = resources.getInteger(R.integer.column_count)
@@ -123,7 +122,7 @@ class BookListFragment : Fragment(), BookListView {
     }
 
     override fun onDestroyView() {
-        logD("$TAG - onDestroyView")
+        logDebug("$TAG - onDestroyView")
         presenter.detachView()
         super.onDestroyView()
         _binding = null
