@@ -1,6 +1,5 @@
 package com.example.otchallenge.ui.booklist
 
-import android.app.ProgressDialog.show
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.LayoutInflater
@@ -18,11 +17,12 @@ import com.example.otchallenge.data.Book
 import com.example.otchallenge.databinding.FragmentBookListBinding
 import com.example.otchallenge.util.logDebug
 import com.google.android.material.snackbar.Snackbar
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
+import javax.inject.Inject
 
-class BookListFragment : Fragment(), BookListView {
-
+class BookListFragment :
+    Fragment(),
+    BookListView {
     companion object {
         private const val RECYCLER_VIEW_STATE = "recycler_view_state"
         private const val TAG = "BookListFragment"
@@ -38,25 +38,22 @@ class BookListFragment : Fragment(), BookListView {
     @Inject
     lateinit var presenter: BookListPresenter
 
-    /**
-     * Not a fan of this naming style but it's what officially documented
-     * https://developer.android.com/topic/libraries/view-binding#fragments so using it here
-     */
-    private var _binding: FragmentBookListBinding? = null
+    private var bindingNullable: FragmentBookListBinding? = null
 
     /**
      * This property is only valid between onCreateView and onDestroyView.
      */
-    private val binding get() = _binding!!
+    private val binding get() = bindingNullable!!
 
     private lateinit var bookListRecyclerViewAdapter: BookListRecyclerViewAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
     ): View {
         logDebug("BookListFragment - onCreateView")
-        _binding = FragmentBookListBinding.inflate(inflater, container, false)
+        bindingNullable = FragmentBookListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -72,17 +69,21 @@ class BookListFragment : Fragment(), BookListView {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         logDebug("$TAG - onViewCreated")
         (requireActivity().application as MyApplication).appComponent.inject(this)
         presenter.attachView(this)
         val columnCount = resources.getInteger(R.integer.column_count)
         bookListRecyclerViewAdapter = BookListRecyclerViewAdapter()
-        val recyclerViewLayoutManager = when {
-            columnCount == 1 -> LinearLayoutManager(context)
-            else -> GridLayoutManager(context, columnCount)
-        }
+        val recyclerViewLayoutManager =
+            when {
+                columnCount == 1 -> LinearLayoutManager(context)
+                else -> GridLayoutManager(context, columnCount)
+            }
         binding.list.setup(recyclerViewLayoutManager, columnCount)
         if (savedInstanceState == null) {
             presenter.loadInitialData()
@@ -91,34 +92,39 @@ class BookListFragment : Fragment(), BookListView {
         }
     }
 
-    private fun RecyclerView.setup(linearLayoutManager: LinearLayoutManager, columnCount: Int) {
+    private fun RecyclerView.setup(
+        linearLayoutManager: LinearLayoutManager,
+        columnCount: Int,
+    ) {
         layoutManager = linearLayoutManager
         adapter = bookListRecyclerViewAdapter
-        val itemDecoration = if (columnCount == 1) {
-            BookListItemLinearDecoration()
-        } else {
-            BookListItemGridDecoration()
-        }
+        val itemDecoration =
+            if (columnCount == 1) {
+                BookListItemLinearDecoration()
+            } else {
+                BookListItemGridDecoration()
+            }
         addItemDecoration(itemDecoration)
         addOnScrollListener(
             LoadMoreScrollListener(
                 bottomThreshold = THRESHOLD_FOR_LOAD_MORE,
                 isLoading = presenter::isLoading,
                 hasMoreData = presenter::hasMoreData,
-                loadMoreData = presenter::loadMoreData
-            )
+                loadMoreData = presenter::loadMoreData,
+            ),
         )
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
-        val state = savedInstanceState?.let {
-            BundleCompat.getParcelable(
-                savedInstanceState,
-                RECYCLER_VIEW_STATE,
-                Parcelable::class.java
-            )
-        }
+        val state =
+            savedInstanceState?.let {
+                BundleCompat.getParcelable(
+                    savedInstanceState,
+                    RECYCLER_VIEW_STATE,
+                    Parcelable::class.java,
+                )
+            }
         binding.list.layoutManager?.onRestoreInstanceState(state)
     }
 
@@ -126,7 +132,7 @@ class BookListFragment : Fragment(), BookListView {
         logDebug("$TAG - onDestroyView")
         presenter.detachView()
         super.onDestroyView()
-        _binding = null
+        bindingNullable = null
     }
 
     override fun showLoading() {
@@ -143,15 +149,20 @@ class BookListFragment : Fragment(), BookListView {
 
     override fun showError(message: String) {
         Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).run {
-            addCallback(object : Snackbar.Callback() {
-                override fun onShown(sb: Snackbar?) {
-                    CountingIdlingResourceProvider.increment()
-                }
+            addCallback(
+                object : Snackbar.Callback() {
+                    override fun onShown(sb: Snackbar?) {
+                        CountingIdlingResourceProvider.increment()
+                    }
 
-                override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
-                    CountingIdlingResourceProvider.decrement()
-                }
-            })
+                    override fun onDismissed(
+                        transientBottomBar: Snackbar?,
+                        event: Int,
+                    ) {
+                        CountingIdlingResourceProvider.decrement()
+                    }
+                },
+            )
             show()
         }
     }

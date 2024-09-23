@@ -21,11 +21,13 @@ import org.mockito.kotlin.wheneverBlocking
 class BookPresenterTest {
     private val mockView = mock<BookListView>()
     private val mockRepository = mock<BookRepository>()
-    private val presenter = BookListPresenter(mockRepository).apply {
-        attachView(mockView)
-    }
+    private val presenter =
+        BookListPresenter(mockRepository).apply {
+            attachView(mockView)
+        }
     private val mockLifecycleOwner: LifecycleOwner = mock()
     private val lifecycle: LifecycleRegistry = LifecycleRegistry(mockLifecycleOwner)
+
     @OptIn(ExperimentalCoroutinesApi::class)
     private val testDispatcher = UnconfinedTestDispatcher()
     private val testScope: TestScope = TestScope(testDispatcher)
@@ -49,19 +51,21 @@ class BookPresenterTest {
     }
 
     @Test
-    fun `loadMoreData does not load when already loading`() = runTest {
-        presenter.isLoading = true
-        presenter.loadMoreData()
-        verifyNoMoreInteractions(mockRepository)
-        verifyNoMoreInteractions(mockView)
-    }
+    fun `loadMoreData does not load when already loading`() =
+        runTest {
+            presenter.isLoading = true
+            presenter.loadMoreData()
+            verifyNoMoreInteractions(mockRepository)
+            verifyNoMoreInteractions(mockView)
+        }
 
     @Test
-    fun `loadMoreData does not load when no more data`() = runTest {
-        presenter.hasMoreData = false
-        presenter.loadMoreData()
+    fun `loadMoreData does not load when no more data`() =
+        runTest {
+            presenter.hasMoreData = false
+            presenter.loadMoreData()
 
-        verifyNoMoreInteractions(mockRepository)
-        verifyNoMoreInteractions(mockView)
-    }
+            verifyNoMoreInteractions(mockRepository)
+            verifyNoMoreInteractions(mockView)
+        }
 }

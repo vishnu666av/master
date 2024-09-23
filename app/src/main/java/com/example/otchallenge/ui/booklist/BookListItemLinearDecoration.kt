@@ -10,12 +10,11 @@ import kotlin.math.roundToInt
  * [RecyclerView.ItemDecoration] to use with screens smaller than 600 dp wide.
  */
 class BookListItemLinearDecoration : RecyclerView.ItemDecoration() {
-
     override fun getItemOffsets(
         outRect: Rect,
         view: View,
         parent: RecyclerView,
-        state: RecyclerView.State
+        state: RecyclerView.State,
     ) {
         val position = parent.getChildAdapterPosition(view)
         val verticalPadding =
@@ -23,11 +22,12 @@ class BookListItemLinearDecoration : RecyclerView.ItemDecoration() {
         with(outRect) {
             // If it's first position then we don't want to add top padding as it would be covered
             // by parent's top padding already
-            top = if (position == 0) {
-                0
-            } else {
-                verticalPadding
-            }
+            top =
+                if (position == 0) {
+                    0
+                } else {
+                    verticalPadding
+                }
             bottom = verticalPadding
         }
     }

@@ -16,14 +16,15 @@ import com.example.otchallenge.databinding.ViewBookListItemBinding
  * Change this adapter to [ListAdapter] if data is not static anymore
  */
 class BookListRecyclerViewAdapter : RecyclerView.Adapter<BookListRecyclerViewAdapter.ViewHolder>() {
-
     private val values: MutableList<Book> = mutableListOf()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            ViewBookListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): ViewHolder =
+        ViewHolder(
+            ViewBookListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false),
         )
-    }
 
     fun addBooks(books: List<Book>) {
         val itemCount = values.size
@@ -31,14 +32,18 @@ class BookListRecyclerViewAdapter : RecyclerView.Adapter<BookListRecyclerViewAda
         notifyItemRangeInserted(itemCount, books.size)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: ViewHolder,
+        position: Int,
+    ) {
         holder.bind(values[position])
     }
 
     override fun getItemCount(): Int = values.size
 
-    class ViewHolder(binding: ViewBookListItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(
+        binding: ViewBookListItemBinding,
+    ) : RecyclerView.ViewHolder(binding.root) {
         private val title: TextView = binding.bookTitle
         private val description: TextView = binding.bookDescription
         private val image: ImageView = binding.bookImage
@@ -54,11 +59,12 @@ class BookListRecyclerViewAdapter : RecyclerView.Adapter<BookListRecyclerViewAda
                 image.setImageDrawable(
                     AppCompatResources.getDrawable(
                         itemView.context,
-                        R.drawable.book_image_placeholder
-                    )
+                        R.drawable.book_image_placeholder,
+                    ),
                 )
             } else {
-                Glide.with(itemView)
+                Glide
+                    .with(itemView)
                     .load(book.imageUrl)
                     .placeholder(R.drawable.book_image_placeholder)
                     .into(image)

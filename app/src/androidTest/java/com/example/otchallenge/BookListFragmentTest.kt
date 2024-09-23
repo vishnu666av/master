@@ -18,26 +18,25 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class BookListFragmentTest {
-	@get:Rule
-	val activityRule = ActivityScenarioRule(MainActivity::class.java)
+    @get:Rule
+    val activityRule = ActivityScenarioRule(MainActivity::class.java)
 
-	@Before
-	fun registerIdlingResource() {
-		IdlingRegistry.getInstance().register(CountingIdlingResourceProvider.countingIdlingResource)
-	}
+    @Before
+    fun registerIdlingResource() {
+        IdlingRegistry.getInstance().register(CountingIdlingResourceProvider.countingIdlingResource)
+    }
 
-	@After
-	fun unregisterIdlingResource() {
-		IdlingRegistry.getInstance().unregister(CountingIdlingResourceProvider.countingIdlingResource)
-	}
+    @After
+    fun unregisterIdlingResource() {
+        IdlingRegistry.getInstance().unregister(CountingIdlingResourceProvider.countingIdlingResource)
+    }
 
-	@Test
-	fun testInitialDataLoading() {
+    @Test
+    fun testInitialDataLoading() {
+        onView(withId(R.id.list))
+            .check(matches(isDisplayed()))
+            .check(matches(hasMinimumChildCount(1)))
 
-		onView(withId(R.id.list))
-			.check(matches(isDisplayed()))
-			.check(matches(hasMinimumChildCount(1)))
-
-		onView(withId(R.id.loading)).check(matches(not(isDisplayed())))
-	}
+        onView(withId(R.id.loading)).check(matches(not(isDisplayed())))
+    }
 }

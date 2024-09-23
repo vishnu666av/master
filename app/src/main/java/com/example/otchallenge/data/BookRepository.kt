@@ -9,40 +9,45 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class BookRepository @Inject constructor(private val nycApiService: NycApiService) {
+class BookRepository
+    @Inject
+    constructor(
+        private val nycApiService: NycApiService,
+    ) {
+        init {
+            logDebug("BookRepository - Singleton Init")
+        }
 
-    init {
-        logDebug("BookRepository - Singleton Init")
-    }
+        @VisibleForTesting
+        internal val offsetToBookMap = mutableMapOf<Int, List<Book>>()
 
-    @VisibleForTesting
-    internal val offsetToBookMap = mutableMapOf<Int, List<Book>>()
-    suspend fun getBooks(offset: Int): Result<List<Book>> {
-        val cachedResult = getFromLocalCache(offset)
-        if (cachedResult != null) {
-            logDebug("BookRepository - Returning CachedResult for offset: $offset")
-            return cachedResult
-        } else {
-            return try {
-                nycApiService.getHardcoverFictionBooks(
-                    BuildConfig.NYTIMES_API_KEY,
-                    offset
-                ).results.books.map { bookModel ->
-                    bookModel.toBook()
-                }.let {
-                    offsetToBookMap[offset] = it
-                    Result.success(it)
+        suspend fun getBooks(offset: Int): Result<List<Book>> {
+            val cachedResult = getFromLocalCache(offset)
+            if (cachedResult != null) {
+                logDebug("BookRepository - Returning CachedResult for offset: $offset")
+                return cachedResult
+            } else {
+                return try {
+                    nycApiService
+                        .getHardcoverFictionBooks(
+                            BuildConfig.NYTIMES_API_KEY,
+                            offset,
+                        ).results.books
+                        .map { bookModel ->
+                            bookModel.toBook()
+                        }.let {
+                            offsetToBookMap[offset] = it
+                            Result.success(it)
+                        }
+                } catch (e: Exception) {
+                    logError(e.stackTraceToString(), e)
+                    Result.failure(e)
                 }
-            } catch (e: Exception) {
-                logError(e.stackTraceToString(), e)
-                Result.failure(e)
             }
         }
+
+        private fun getFromLocalCache(offset: Int): Result<List<Book>>? =
+            offsetToBookMap[offset]?.let {
+                Result.success(it)
+            }
     }
-
-
-    private fun getFromLocalCache(offset: Int): Result<List<Book>>? =
-        offsetToBookMap[offset]?.let {
-            Result.success(it)
-        }
-}

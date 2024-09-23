@@ -8,8 +8,12 @@ import kotlinx.coroutines.CoroutineScope
  */
 interface BookListView {
     fun showLoading()
+
     fun hideLoading()
+
     fun showError(message: String)
+
     fun getLifecycleScope(): CoroutineScope
+
     fun addBooks(books: List<Book>)
 }

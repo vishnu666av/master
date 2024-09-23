@@ -12,7 +12,9 @@ data class BookResponse(
 )
 
 @Serializable
-data class BookResults(val books: List<BookModel>)
+data class BookResults(
+    val books: List<BookModel>,
+)
 
 /**
  * Server model that represents a book object. This should only be used to serialize/deserialize
@@ -24,7 +26,7 @@ data class BookModel(
     val title: String,
     @SerialName("book_image")
     val bookImage: String,
-    val author: String
+    val author: String,
 ) {
     fun toBook() = Book(title, author, description, bookImage)
 }

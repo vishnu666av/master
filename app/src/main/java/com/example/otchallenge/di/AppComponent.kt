@@ -9,5 +9,6 @@ import javax.inject.Singleton
 @Component(modules = [NetworkModule::class])
 interface AppComponent {
     fun inject(activity: MainActivity)
+
     fun inject(fragment: BookListFragment)
 }

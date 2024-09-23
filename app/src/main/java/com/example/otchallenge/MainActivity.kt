@@ -12,7 +12,6 @@ import com.example.otchallenge.databinding.ActivityMainBinding
 import com.example.otchallenge.util.logDebug
 
 class MainActivity : AppCompatActivity() {
-
     companion object {
         private const val TAG = "MainActivity"
     }
@@ -42,7 +41,9 @@ class MainActivity : AppCompatActivity() {
     private fun setupActionBarNavController() {
         setSupportActionBar(binding.toolbar)
         val navController =
-            binding.content.navHostContainer.getFragment<NavHostFragment>().navController
+            binding.content.navHostContainer
+                .getFragment<NavHostFragment>()
+                .navController
         val appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
     }

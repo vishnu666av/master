@@ -7,11 +7,13 @@ class LoadMoreScrollListener(
     private val bottomThreshold: Int,
     private val isLoading: () -> Boolean,
     private val hasMoreData: () -> Boolean,
-    private val loadMoreData: () -> Unit
-) :
-    RecyclerView.OnScrollListener() {
-
-    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+    private val loadMoreData: () -> Unit,
+) : RecyclerView.OnScrollListener() {
+    override fun onScrolled(
+        recyclerView: RecyclerView,
+        dx: Int,
+        dy: Int,
+    ) {
         super.onScrolled(recyclerView, dx, dy)
         if (dy > 0) { // Only check when scrolling down
             val layoutManager = recyclerView.layoutManager as LinearLayoutManager

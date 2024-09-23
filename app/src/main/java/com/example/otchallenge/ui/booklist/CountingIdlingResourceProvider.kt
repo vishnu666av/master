@@ -6,7 +6,6 @@ import androidx.test.espresso.idling.CountingIdlingResource
  * To help with espresso tests for real time synchronization.
  */
 object CountingIdlingResourceProvider {
-
     private const val RESOURCE = "GLOBAL"
 
     val countingIdlingResource = CountingIdlingResource(RESOURCE)

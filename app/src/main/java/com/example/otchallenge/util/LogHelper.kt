@@ -10,6 +10,9 @@ fun logDebug(message: String) {
 }
 
 // Simple log error method for calling from anywhere
-fun logError(message: String, throwable: Throwable) {
+fun logError(
+    message: String,
+    throwable: Throwable,
+) {
     Timber.tag(TAG).e(throwable, message)
 }

@@ -11,12 +11,11 @@ import kotlin.math.roundToInt
  * and also some phones when in landscape mode
  */
 class BookListItemGridDecoration : RecyclerView.ItemDecoration() {
-
     override fun getItemOffsets(
         outRect: Rect,
         view: View,
         parent: RecyclerView,
-        state: RecyclerView.State
+        state: RecyclerView.State,
     ) {
         val position = parent.getChildAdapterPosition(view)
         val columnCount = view.resources.getInteger(R.integer.column_count)
@@ -26,21 +25,24 @@ class BookListItemGridDecoration : RecyclerView.ItemDecoration() {
             view.resources.getDimension(R.dimen.horizontal_padding_book_item).roundToInt()
         with(outRect) {
             // Don't add vertical padding for the first item
-            top = if (position == 0 || position == 1) {
-                0
-            } else {
-                verticalPadding
-            }
-            left = if (position % columnCount == 0) {
-                0
-            } else {
-                horizontalPadding
-            }
-            right = if (position % columnCount == columnCount - 1) {
-                0
-            } else {
-                horizontalPadding
-            }
+            top =
+                if (position == 0 || position == 1) {
+                    0
+                } else {
+                    verticalPadding
+                }
+            left =
+                if (position % columnCount == 0) {
+                    0
+                } else {
+                    horizontalPadding
+                }
+            right =
+                if (position % columnCount == columnCount - 1) {
+                    0
+                } else {
+                    horizontalPadding
+                }
             bottom = verticalPadding
         }
     }

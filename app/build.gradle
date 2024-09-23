@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.serialization)
     alias(libs.plugins.paparazzi)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.spotless)
 }
 
 // TODO This is never a good idea to put API KEY here and push it to version control
