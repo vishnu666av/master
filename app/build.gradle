@@ -1,9 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    alias(libs.plugins.kapt)
     alias(libs.plugins.serialization)
     alias(libs.plugins.paparazzi)
+    alias(libs.plugins.ksp)
 }
 
 // TODO This is never a good idea to put API KEY here and push it to version control
@@ -65,7 +65,7 @@ dependencies {
     implementation libs.dagger
     implementation libs.androidx.recyclerview
     implementation libs.androidx.espresso.idling.resource
-    kapt libs.dagger.compiler
+    ksp libs.dagger.compiler
 
     // retrofit
     implementation libs.retrofit
