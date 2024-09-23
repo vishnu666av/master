@@ -1,5 +1,6 @@
 package com.example.otchallenge.data
 
+import androidx.annotation.VisibleForTesting
 import com.example.otchallenge.BuildConfig
 import com.example.otchallenge.api.NycApiService
 import com.example.otchallenge.util.logDebug
@@ -14,7 +15,8 @@ class BookRepository @Inject constructor(private val nycApiService: NycApiServic
         logDebug("BookRepository - Singleton Init")
     }
 
-    private val offsetToBookMap = mutableMapOf<Int, List<Book>>()
+    @VisibleForTesting
+    internal val offsetToBookMap = mutableMapOf<Int, List<Book>>()
     suspend fun getBooks(offset: Int): Result<List<Book>> {
         val cachedResult = getFromLocalCache(offset)
         if (cachedResult != null) {
@@ -25,8 +27,8 @@ class BookRepository @Inject constructor(private val nycApiService: NycApiServic
                 nycApiService.getHardcoverFictionBooks(
                     BuildConfig.NYTIMES_API_KEY,
                     offset
-                ).results.books.map {
-                    Book(it.title, it.author, it.description, it.bookImage)
+                ).results.books.map { bookModel ->
+                    bookModel.toBook()
                 }.let {
                     offsetToBookMap[offset] = it
                     Result.success(it)

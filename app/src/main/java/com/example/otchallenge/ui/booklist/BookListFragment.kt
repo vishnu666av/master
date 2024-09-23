@@ -1,5 +1,6 @@
 package com.example.otchallenge.ui.booklist
 
+import android.app.ProgressDialog.show
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.LayoutInflater
@@ -141,7 +142,18 @@ class BookListFragment : Fragment(), BookListView {
     }
 
     override fun showError(message: String) {
-        Snackbar.make(binding.list, message, Snackbar.LENGTH_LONG).show()
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).run {
+            addCallback(object : Snackbar.Callback() {
+                override fun onShown(sb: Snackbar?) {
+                    CountingIdlingResourceProvider.increment()
+                }
+
+                override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                    CountingIdlingResourceProvider.decrement()
+                }
+            })
+            show()
+        }
     }
 
     override fun getLifecycleScope(): CoroutineScope = viewLifecycleOwner.lifecycleScope

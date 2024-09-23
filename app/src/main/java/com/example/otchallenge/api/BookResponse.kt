@@ -25,4 +25,6 @@ data class BookModel(
     @SerialName("book_image")
     val bookImage: String,
     val author: String
-)
+) {
+    fun toBook() = Book(title, author, description, bookImage)
+}

@@ -19,7 +19,8 @@
         tools:context=".ui.booklist.BookListFragment"
         tools:listitem="@layout/view_book_list_item" />
 
-    <com.google.android.material.progressindicator.CircularProgressIndicator
+    <ProgressBar
+        android:indeterminate="true"
         android:id="@+id/loading"
         android:layout_width="92dp"
         android:layout_height="92dp"

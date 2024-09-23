@@ -1,5 +1,6 @@
 package com.example.otchallenge.ui.booklist
 
+import androidx.annotation.VisibleForTesting
 import com.example.otchallenge.data.BookRepository
 import com.example.otchallenge.util.logDebug
 import javax.inject.Inject
@@ -21,9 +22,11 @@ class BookListPresenter @Inject constructor(private val bookRepository: BookRepo
     private var job: Job? = null
     private var currentOffset = 0
     var isLoading = false
-        private set
+        @VisibleForTesting
+        internal set
     var hasMoreData = true
-        private set
+        @VisibleForTesting
+        internal set
 
     init {
         logDebug("$TAG - Init")
@@ -57,7 +60,7 @@ class BookListPresenter @Inject constructor(private val bookRepository: BookRepo
     private fun loadBooks() {
         job?.cancel()
         job = view?.getLifecycleScope()?.launch {
-            view?.showLoading()
+            CountingIdlingResourceProvider.increment()
             val result = bookRepository.getBooks(0)
             if (result.isSuccess) {
                 val books = result.getOrDefault(listOf())
@@ -73,6 +76,7 @@ class BookListPresenter @Inject constructor(private val bookRepository: BookRepo
                 }
             }
             view?.hideLoading()
+            CountingIdlingResourceProvider.decrement()
         }
     }
 }
