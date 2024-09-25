@@ -5,15 +5,17 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.otchallenge.model.Book
+import io.reactivex.Single
+import io.reactivex.Completable
 
 @Dao
 interface BookDao {
     @Query("SELECT * FROM books ORDER BY rank ASC")
-    fun getAllBooks(): List<Book>
+    fun getAllBooks(): Single<List<Book>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertBooks(books: List<Book>)
+    fun insertBooks(books: List<Book>): Completable
 
     @Query("DELETE FROM books")
-    fun deleteAllBooks()
+    fun deleteAllBooks(): Completable
 }
