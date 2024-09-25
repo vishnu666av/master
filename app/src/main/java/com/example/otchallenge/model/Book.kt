@@ -7,10 +7,10 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "books")
 data class Book(
     @PrimaryKey
-    val isbn13: String,
+    val primary_isbn13: String,
     val rank: Int,
     val title: String,
     val author: String,
     val description: String,
-    val bookImage: String
+    val book_Image: String
 )
