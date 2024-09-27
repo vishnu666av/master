@@ -5,5 +5,10 @@
 		<!-- <item name="colorPrimary">@color/my_light_primary</item> -->
 	</style>
 
+	<style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+		<item name="android:textSize">24sp</item>
+		<item name="android:textColor">@color/white</item>
+	</style>
+
 	<style name="Theme.AndroidOTChallenge" parent="Base.Theme.AndroidOTChallenge" />
 </resources>

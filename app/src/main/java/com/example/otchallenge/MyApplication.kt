@@ -1,8 +1,12 @@
 package com.example.otchallenge
 
 import android.app.Application
+import android.net.Network
 import com.example.otchallenge.di.AppComponent
 import com.example.otchallenge.di.DaggerAppComponent
+import com.example.otchallenge.di.DatabaseModule
+import com.example.otchallenge.di.NetworkModule
+import com.example.otchallenge.di.RepositoryModule
 
 class MyApplication : Application() {
 
@@ -10,6 +14,10 @@ class MyApplication : Application() {
 
 	override fun onCreate() {
 		super.onCreate()
-		appComponent = DaggerAppComponent.builder().build()
+		appComponent = DaggerAppComponent.builder()
+			.networkModule(NetworkModule())
+			.databaseModule(DatabaseModule(this))
+			.repositoryModule(RepositoryModule())
+			.build()
 	}
 }
