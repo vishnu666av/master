@@ -54,11 +54,11 @@ class BookRepository (private val apiService: ApiService, private val bookDao: B
                         if (cachedBooks.isNotEmpty()) {
                             Single.just(cachedBooks)
                         }else{
-                            Single.error(it)
+                            //Single.error(it)
+                            Single.just(emptyList())
                         }
                     }
             }
-            //.subscribeOn(Schedulers.io()) // Use io scheduler for API operation
             .observeOn(AndroidSchedulers.mainThread()) // Process UI task on mainThread
     }
 }

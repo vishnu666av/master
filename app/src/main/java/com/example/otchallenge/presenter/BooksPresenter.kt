@@ -21,7 +21,6 @@ class BooksPresenter(private val repository: BookRepository) : BooksContract.Pre
     }
 
     override fun fetchBooks() {
-        println("fetchBooks()")
         view?.showProgress()
 
         val disposableTask = repository.fetchBooks()
@@ -31,14 +30,14 @@ class BooksPresenter(private val repository: BookRepository) : BooksContract.Pre
                 view?.displayBooks(books)
             }, {error ->
                 view?.hideProgress()
-//                if (error is CompositeException) {
-//                    // Log each exception separately
-//                    error.exceptions.forEach {
-//                        println("Exception occurred: ${it.message}")
-//                    }
-//                } else {
-//                    println("Single exception: ${error.message}")
-//                }
+                if (error is CompositeException) {
+                    // Log each exception separately
+                    error.exceptions.forEach {
+                        println("Exception occurred: ${it.message}")
+                    }
+                } else {
+                    println("Single exception: ${error.message}")
+                }
                 view?.showError(error.message ?: "An error occurred")
             })
 

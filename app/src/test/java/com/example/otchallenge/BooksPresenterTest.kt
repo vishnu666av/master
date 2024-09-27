@@ -50,7 +50,8 @@ class BooksPresenterTest {
             Book(
                 "9780385550369",
                 15,
-                "JAMES",
+                "",
+                //"JAMES",
                 "Percival Everett",
                 "A reimagining of “Adventures of Huckleberry Finn” shines a different light on Mark Twain's classic, revealing new facets of the character of Jim.",
                 "https://storage.googleapis.com/du-prd/books/images/9780385550369.jpg"

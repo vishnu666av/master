@@ -90,11 +90,8 @@ dependencies {
     testImplementation libs.androidx.core.testing  // For LiveData and Room testing
     testImplementation libs.androidx.room.testing  // For Room in-memory database testing
 
-    // Arrow core
-    implementation libs.arrow.core
-
-    // temp
-    implementation libs.gson
+    // Material Design
+    implementation libs.material
 
     androidTestImplementation libs.androidx.runner
     testImplementation libs.junit
