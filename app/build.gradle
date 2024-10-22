@@ -25,6 +25,7 @@ android {
         }
     }
     compileOptions {
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -46,7 +47,11 @@ dependencies {
 
     //retrofit
     implementation libs.retrofit
+    implementation libs.retrofit.cvtgson
     implementation libs.retrofit.rx.adapter
+
+    // ** Gson
+    implementation libs.gson
 
     //glide
     implementation libs.glide
@@ -59,4 +64,7 @@ dependencies {
     testImplementation libs.junit
     androidTestImplementation libs.androidx.junit
     androidTestImplementation libs.androidx.espresso.core
+
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
+
 }

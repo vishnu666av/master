@@ -6,10 +6,7 @@ import com.example.otchallenge.di.DaggerAppComponent
 
 class MyApplication : Application() {
 
-	lateinit var appComponent: AppComponent
-
-	override fun onCreate() {
-		super.onCreate()
-		appComponent = DaggerAppComponent.builder().build()
+	val appComponent: AppComponent by lazy {
+		DaggerAppComponent.factory().create(applicationContext)
 	}
 }
