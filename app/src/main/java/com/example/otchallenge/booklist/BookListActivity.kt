@@ -23,6 +23,8 @@ class BookListActivity : AppCompatActivity(), BookListView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // ** Inject dependencies **
         (application as MyApplication).appComponent
 			.bookListComponentBuilder()
 			.withContext(this)
@@ -30,6 +32,7 @@ class BookListActivity : AppCompatActivity(), BookListView {
             .build()
 			.inject(this)
 
+        // ** Setup UI **
         enableEdgeToEdge()
         setContentView(R.layout.activity_book_list)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->

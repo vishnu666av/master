@@ -11,7 +11,12 @@ interface BookListComponent {
 
     @Subcomponent.Builder
     interface Builder {
+        /*
+        * Provides activity context to the subcomponent graph */
         fun withContext(@BindsInstance context: Context): Builder
+
+        /*
+        * Provides class that implements the view (activity) to the subcomponent graph */
         fun withView(@BindsInstance view: BookListView): Builder
         fun build(): BookListComponent
     }

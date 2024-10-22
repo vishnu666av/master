@@ -18,6 +18,8 @@ class BookListUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(): BooksContentUIState {
+        /*
+        * Runs the API call in a background thread */
         return withContext(dispatcher) {
             map(apiService.fetchBooks())
         }

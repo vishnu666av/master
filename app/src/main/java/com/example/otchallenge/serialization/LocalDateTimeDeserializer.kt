@@ -10,6 +10,9 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 
+/*
+* Deserializer, used to convert ISO date time into local date time.
+* */
 class LocalDateTimeDeserializer: JsonDeserializer<LocalDateTime> {
     override fun deserialize(
         json: JsonElement?,
