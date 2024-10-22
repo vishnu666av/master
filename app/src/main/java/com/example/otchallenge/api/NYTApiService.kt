@@ -1,7 +1,7 @@
 package com.example.otchallenge.api
 
+import com.example.otchallenge.api.dto.BookResponseDto
 import com.example.otchallenge.define.Constant
-import com.example.otchallenge.dto.BookResponseDto
 import retrofit2.http.GET
 import retrofit2.http.Query
 

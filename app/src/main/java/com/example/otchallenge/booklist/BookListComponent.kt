@@ -12,6 +12,7 @@ interface BookListComponent {
     @Subcomponent.Builder
     interface Builder {
         fun withContext(@BindsInstance context: Context): Builder
+        fun withView(@BindsInstance view: BookListView): Builder
         fun build(): BookListComponent
     }
 

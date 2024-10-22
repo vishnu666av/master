@@ -1,4 +1,4 @@
-package com.example.otchallenge.dto
+package com.example.otchallenge.api.dto
 
 import com.google.gson.annotations.SerializedName
 
