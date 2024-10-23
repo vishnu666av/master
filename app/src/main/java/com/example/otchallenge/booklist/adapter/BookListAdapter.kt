@@ -10,7 +10,7 @@ import com.example.otchallenge.R
 import com.example.otchallenge.booklist.uistate.BookUIState
 import com.example.otchallenge.databinding.BookListItemBinding
 
-class BookListAdapter(private val books: List<BookUIState>) :
+class BookListAdapter(var books: List<BookUIState> = emptyList()) :
     RecyclerView.Adapter<BookListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -42,6 +42,11 @@ class BookListAdapter(private val books: List<BookUIState>) :
                 .into(binding.imageView)
         }
 
+    }
+
+    fun updateBooks(newBooks: List<BookUIState>) {
+        books = newBooks
+        notifyDataSetChanged()
     }
 
 }

@@ -30,7 +30,9 @@ class BookListUseCase @Inject constructor(
     * */
     private fun map(response: BookResponseDto): BooksContentUIState {
         return BooksContentUIState(
-            books = response.result.books.map { map(it) }
+            books = response.result.books.map { map(it) },
+            listName = response.result.listName,
+            lastModified = response.lastModified
         )
     }
 

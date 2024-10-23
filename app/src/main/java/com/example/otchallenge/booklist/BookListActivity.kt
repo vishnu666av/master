@@ -1,6 +1,8 @@
 package com.example.otchallenge.booklist
 
 import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkRequest
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
@@ -10,13 +12,16 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.ConcatAdapter
 import com.example.otchallenge.MyApplication
 import com.example.otchallenge.R
 import com.example.otchallenge.booklist.adapter.BookListAdapter
+import com.example.otchallenge.booklist.adapter.HeaderAdapter
 import com.example.otchallenge.booklist.uistate.BooksContentUIState
 import com.example.otchallenge.databinding.ActivityBookListBinding
 import com.example.otchallenge.utils.recyclerview.SpacingItemDecoration
 import com.example.otchallenge.utils.recyclerview.autoFitLayout
+import com.google.android.material.snackbar.Snackbar
 import java.net.UnknownHostException
 import javax.inject.Inject
 
@@ -29,6 +34,9 @@ class BookListActivity : AppCompatActivity(), BookListView {
     lateinit var presenter: BookListPresenter
 
     private lateinit var binding: ActivityBookListBinding
+
+    private lateinit var bookListAdapter : BookListAdapter
+    private lateinit var headerAdapter : HeaderAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +61,7 @@ class BookListActivity : AppCompatActivity(), BookListView {
             insets
         }
 
-        // ** Setting up the recycler view **
+        // ** Setting up the recycler view and its adapters**
         binding.recyclerView.autoFitLayout(
             resources.getDimension(R.dimen.recycler_view_column_width).toDouble()
         )
@@ -61,8 +69,26 @@ class BookListActivity : AppCompatActivity(), BookListView {
             SpacingItemDecoration(resources.getDimension(R.dimen.recycler_view_padding).toInt())
         )
 
-        // ** Load books
-        presenter.loadBooks()
+        // ** Concatenating adapters to the recycler view **
+        bookListAdapter = BookListAdapter()
+        headerAdapter = HeaderAdapter()
+        binding.recyclerView.adapter = ConcatAdapter(headerAdapter, bookListAdapter)
+
+        // ** Retry button
+        binding.retryButton.setOnClickListener {
+            presenter.reloadIfNeeded()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        connectivityManager.registerNetworkCallback(NetworkRequest.Builder().build(), connectivityManagerCallback)
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        connectivityManager.unregisterNetworkCallback(connectivityManagerCallback)
     }
 
     override fun updateLoadingState(loadingState: LoadingState<BooksContentUIState>) {
@@ -72,6 +98,7 @@ class BookListActivity : AppCompatActivity(), BookListView {
                 binding.progressBarContainer.visibility = View.GONE
                 binding.recyclerView.visibility = View.GONE
 
+                // ** Display the correct error message **
                 if (loadingState.throwable is UnknownHostException) {
                     binding.errorImageView.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.twotone_cell_tower_80, null))
                     binding.errorTextView.text = getString(R.string.no_internet_connection_error)
@@ -93,7 +120,8 @@ class BookListActivity : AppCompatActivity(), BookListView {
                 binding.errorContainer.visibility = View.GONE
 
                 loadingState.content?.let { content ->
-                    binding.recyclerView.adapter = BookListAdapter(content.books)
+                    headerAdapter.update(content.listName, content.lastModified)
+                    bookListAdapter.updateBooks(content.books)
                 }
             }
         }
@@ -101,4 +129,16 @@ class BookListActivity : AppCompatActivity(), BookListView {
 
     override val ownerLifecycleScope: LifecycleCoroutineScope
         get() = lifecycleScope
+
+    private val connectivityManagerCallback = object : ConnectivityManager.NetworkCallback() {
+        override fun onAvailable(network: Network) {
+            runOnUiThread {
+                presenter.reloadIfNeeded()
+            }
+        }
+
+        override fun onLost(network: Network) {
+            Snackbar.make(binding.root, "", Snackbar.LENGTH_SHORT).show()
+        }
+    }
 }

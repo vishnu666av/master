@@ -19,7 +19,14 @@ fun RecyclerView.autoFitLayout(columnWidth: Double) {
         // ** Setting layout manager, according to screen width **
         if (widthDp > columnWidth){
             val columnCount = kotlin.math.floor((widthDp / columnWidth)).toInt()
-            layoutManager = GridLayoutManager(it, columnCount)
+            layoutManager = GridLayoutManager(it, columnCount).apply {
+
+                // ** Excluding header view, from shrinking into columns
+                spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                    override fun getSpanSize(position: Int) =
+                        if (position == 0) columnCount else 1
+                }
+            }
         } else {
             layoutManager = LinearLayoutManager(it)
         }
