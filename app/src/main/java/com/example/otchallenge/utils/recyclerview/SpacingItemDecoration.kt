@@ -11,7 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 class SpacingItemDecoration(private val spacing: Int) : RecyclerView.ItemDecoration() {
 
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
-        val position = parent.getChildAdapterPosition(view)
+        // ** Get the position by considering the header view. The header view is at position 0, so we subtract 1. **
+        val position = parent.getChildAdapterPosition(view) - 1
         val columnCount = (parent.layoutManager as? GridLayoutManager)?.spanCount ?: 1
 
         val left = if (position % columnCount == 0) spacing else spacing / 2

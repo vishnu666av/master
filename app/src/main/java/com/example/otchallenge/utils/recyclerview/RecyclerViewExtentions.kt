@@ -4,21 +4,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlin.math.round
 
 /**
 * Breaks the recycler view layout, on bigger screens. And uses linear layout on smaller screens.
 * @param columnWidth - The minimum size, for column width in pixels.
 * */
-fun RecyclerView.autoFitLayout(columnWidth: Double) {
+fun RecyclerView.autoFitLayout(columnWidth: Int) {
     (context as? AppCompatActivity)?.let {
-        // ** Obtaining the screen width, in DP **
+        // ** Obtaining the screen width, in Pixels **
         val widthPixels= it.resources.displayMetrics.widthPixels
-        val density = resources.displayMetrics.density
-        val widthDp = widthPixels / density
 
         // ** Setting layout manager, according to screen width **
-        if (widthDp > columnWidth){
-            val columnCount = kotlin.math.floor((widthDp / columnWidth)).toInt()
+        if (widthPixels > columnWidth){
+            val columnCount = round(widthPixels.toDouble() / columnWidth.toDouble()).toInt()
             layoutManager = GridLayoutManager(it, columnCount).apply {
 
                 // ** Excluding header view, from shrinking into columns

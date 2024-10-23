@@ -7,6 +7,7 @@ import com.example.otchallenge.define.Constant
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
+import okhttp3.Cache
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -18,8 +19,15 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideHttpClient() : OkHttpClient {
+    fun provideCache(context: Context): Cache {
+        return Cache(context.cacheDir, (5 * 1024 * 1024).toLong())
+    }
+
+    @Provides
+    @Singleton
+    fun provideHttpClient(catch: Cache) : OkHttpClient {
         return OkHttpClient.Builder()
+            .cache(catch)
             .connectTimeout(15, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)

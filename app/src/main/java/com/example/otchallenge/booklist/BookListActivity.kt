@@ -64,10 +64,10 @@ class BookListActivity : AppCompatActivity(), BookListView {
 
         // ** Setting up the recycler view and its adapters**
         binding.recyclerView.autoFitLayout(
-            resources.getDimension(R.dimen.recycler_view_column_width).toDouble()
+            resources.getDimensionPixelSize(R.dimen.recycler_view_column_width)
         )
         binding.recyclerView.addItemDecoration(
-            SpacingItemDecoration(resources.getDimension(R.dimen.recycler_view_padding).toInt())
+            SpacingItemDecoration(resources.getDimensionPixelSize(R.dimen.recycler_view_padding))
         )
 
         // ** Concatenating adapters to the recycler view **

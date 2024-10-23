@@ -46,7 +46,7 @@ class BookListPresenter @Inject constructor(val view: BookListView, val useCase:
      * Calls [loadBooks] if the data is not loaded.
      */
     fun reloadIfNeeded() {
-        if (uiState.books.isNotEmpty() && uiState.loadingState !is  LoadingState.Loading) {
+        if (uiState.books.isNotEmpty() || uiState.loadingState is  LoadingState.Loading) {
             return
         }
 
