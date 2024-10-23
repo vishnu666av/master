@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class BookListPresenter @Inject constructor(val view: BookListView, val useCase: BookListUseCase) {
 
-    /*
+    /**
     * Loads the list of books from the use case.
     * */
     fun loadBooks() {
