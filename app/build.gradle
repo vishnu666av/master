@@ -31,6 +31,10 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    viewBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -40,6 +44,8 @@ dependencies {
     implementation libs.material
     implementation libs.androidx.activity
     implementation libs.androidx.constraintlayout
+    implementation libs.androidx.recyclerview
+    implementation libs.swipe.refresh.layout
     // dagger
     implementation libs.dagger
     kapt libs.dagger.compiler
@@ -47,6 +53,7 @@ dependencies {
     //retrofit
     implementation libs.retrofit
     implementation libs.retrofit.rx.adapter
+    implementation libs.converter.gson
 
     //glide
     implementation libs.glide
@@ -57,6 +64,8 @@ dependencies {
     implementation libs.rx.kotlin
 
     testImplementation libs.junit
+    testImplementation libs.mockito.core
+    testImplementation libs.mockito.kotlin
     androidTestImplementation libs.androidx.junit
     androidTestImplementation libs.androidx.espresso.core
 }
