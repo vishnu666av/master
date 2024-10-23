@@ -6,6 +6,7 @@ data class BooksContentUIState(
     val books: List<BookUIState>,
     val listName: String,
     val lastModified: LocalDateTime,
+    val loadingState: LoadingState
 
 ) {
     companion object {
@@ -13,6 +14,7 @@ data class BooksContentUIState(
             books = emptyList(),
             listName = "",
             lastModified = LocalDateTime.now(),
+            loadingState = LoadingState.Loading
         )
     }
 }

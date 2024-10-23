@@ -1,6 +1,7 @@
 package com.example.otchallenge.booklist
 
 import com.example.otchallenge.booklist.uistate.BooksContentUIState
+import com.example.otchallenge.booklist.uistate.LoadingState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -12,29 +13,31 @@ class BookListPresenter @Inject constructor(val view: BookListView, val useCase:
      * State of the UI.
      */
     private var uiState: BooksContentUIState = BooksContentUIState.EMPTY
+        set(value) {
+            field = value
+            view.deliverState(field)
+        }
 
     /**
      * Loads the list of books from the use case.
      * */
     fun loadBooks() {
-        view.updateLoadingState(LoadingState.Loading)
+        uiState = uiState.copy(loadingState = LoadingState.Loading)
 
         view.ownerLifecycleScope.launch {
-            val status = try {
+            val state = try {
                 // ** Load the books **
                 val freshContent = useCase()
 
                 // ** Update the UI state, by adding the new books **
-                uiState = freshContent.copy(books = uiState.books + freshContent.books)
-
-                LoadingState.Ready(uiState)
+                freshContent.copy(books = uiState.books + freshContent.books, loadingState = LoadingState.Ready)
             } catch (exp: Exception) {
-                LoadingState.Error(exp)
+                uiState.copy(loadingState = LoadingState.Error(exp))
             }
 
             // ** Update the UI **
             withContext(Dispatchers.Main) {
-                view.updateLoadingState(status)
+                uiState = state
             }
         }
     }
@@ -43,7 +46,7 @@ class BookListPresenter @Inject constructor(val view: BookListView, val useCase:
      * Calls [loadBooks] if the data is not loaded.
      */
     fun reloadIfNeeded() {
-        if (uiState.books.isNotEmpty()) {
+        if (uiState.books.isNotEmpty() && uiState.loadingState !is  LoadingState.Loading) {
             return
         }
 

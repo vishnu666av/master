@@ -29,7 +29,7 @@ class BookListUseCase @Inject constructor(
     * Reduces the Dto to the UI state
     * */
     private fun map(response: BookResponseDto): BooksContentUIState {
-        return BooksContentUIState(
+        return BooksContentUIState.EMPTY.copy(
             books = response.result.books.map { map(it) },
             listName = response.result.listName,
             lastModified = response.lastModified

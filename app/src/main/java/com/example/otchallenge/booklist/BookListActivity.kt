@@ -18,6 +18,7 @@ import com.example.otchallenge.R
 import com.example.otchallenge.booklist.adapter.BookListAdapter
 import com.example.otchallenge.booklist.adapter.HeaderAdapter
 import com.example.otchallenge.booklist.uistate.BooksContentUIState
+import com.example.otchallenge.booklist.uistate.LoadingState
 import com.example.otchallenge.databinding.ActivityBookListBinding
 import com.example.otchallenge.utils.recyclerview.SpacingItemDecoration
 import com.example.otchallenge.utils.recyclerview.autoFitLayout
@@ -78,6 +79,9 @@ class BookListActivity : AppCompatActivity(), BookListView {
         binding.retryButton.setOnClickListener {
             presenter.reloadIfNeeded()
         }
+
+        // ** Load books **
+        presenter.loadBooks()
     }
 
     override fun onResume() {
@@ -91,15 +95,15 @@ class BookListActivity : AppCompatActivity(), BookListView {
         connectivityManager.unregisterNetworkCallback(connectivityManagerCallback)
     }
 
-    override fun updateLoadingState(loadingState: LoadingState<BooksContentUIState>) {
-        when (loadingState) {
+    override fun deliverState(state: BooksContentUIState) {
+        when (state.loadingState) {
             is LoadingState.Error -> {
                 binding.errorContainer.visibility = View.VISIBLE
                 binding.progressBarContainer.visibility = View.GONE
                 binding.recyclerView.visibility = View.GONE
 
                 // ** Display the correct error message **
-                if (loadingState.throwable is UnknownHostException) {
+                if (state.loadingState.throwable is UnknownHostException) {
                     binding.errorImageView.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.twotone_cell_tower_80, null))
                     binding.errorTextView.text = getString(R.string.no_internet_connection_error)
                 } else {
@@ -119,10 +123,8 @@ class BookListActivity : AppCompatActivity(), BookListView {
                 binding.progressBarContainer.visibility = View.GONE
                 binding.errorContainer.visibility = View.GONE
 
-                loadingState.content?.let { content ->
-                    headerAdapter.update(content.listName, content.lastModified)
-                    bookListAdapter.updateBooks(content.books)
-                }
+                headerAdapter.update(state.listName, state.lastModified)
+                bookListAdapter.updateBooks(state.books)
             }
         }
     }
