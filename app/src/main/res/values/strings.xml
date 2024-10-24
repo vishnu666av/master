@@ -1,3 +1,12 @@
 <resources>
-	<string name="app_name">AndroidOTChallenge</string>
+    <string name="app_name">AndroidOTChallenge</string>
+    <string name="loading_books">Loading Books …</string>
+    <string name="fetch_error_display">Something went wrong.\nPlease try again later.</string>
+    <string name="no_internet_connection_error">No Internet Connection!</string>
+    <string name="internet_lost">Internet lost</string>
+    <string name="data_fetch_error">Fetch Error</string>
+    <string name="try_again">Try Again</string>
+    <string name="rank_and_title">#%1$d %2$s</string>
+    <string name="lastUpdate_and_date">Last update: %1$s</string>
+    <string name="book_cover">Book Cover</string>
 </resources>
