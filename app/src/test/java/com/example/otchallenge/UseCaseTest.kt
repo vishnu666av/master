@@ -5,7 +5,6 @@ import com.example.otchallenge.api.dto.BookDto
 import com.example.otchallenge.api.dto.BookResponseDto
 import com.example.otchallenge.api.dto.BookResultDto
 import com.example.otchallenge.booklist.BookListUseCase
-import com.example.otchallenge.utils.capitalizeWords
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -48,7 +47,7 @@ class UseCaseTest {
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
-    fun `calls api for data is successful and data is mapped to ui model`() = runTest {
+    fun `calls api for data is successful`() = runTest {
         // ** Preparing mock response
         val books = listOf(
             BookDto(
@@ -80,17 +79,6 @@ class UseCaseTest {
         whenever(nytApiService.fetchBooks()).thenReturn(responseDto)
         val content = useCase()
 
-        assert(content.books.size == books.size)
-
-        // ** Making sure data is mapped correctly **
-        content.books.forEachIndexed { index, bookUIState ->
-            assert(bookUIState.title == books[index].title.capitalizeWords())
-            assert(bookUIState.description == books[index].description)
-            assert(bookUIState.rank == books[index].rank)
-            assert(bookUIState.author == books[index].contributor)
-            assert(bookUIState.imageUrl == books[index].bookImage)
-        }
-        assert(content.listName == resultDto.listName)
-        assert(content.lastModified == responseDto.lastModified)
+        assert(content == responseDto)
     }
 }

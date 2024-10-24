@@ -8,4 +8,8 @@ data class BookResponseDto(
     val copyright: String,
     @SerializedName("num_results") val totalBooks: Int,
     @SerializedName("last_modified") val lastModified: LocalDateTime
-)
+) {
+    companion object {
+        val DEFAULT = BookResponseDto(BookResultDto.DEFAULT, "", 0, LocalDateTime.now())
+    }
+}

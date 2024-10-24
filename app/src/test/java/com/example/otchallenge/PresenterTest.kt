@@ -1,11 +1,14 @@
 package com.example.otchallenge
 
+import com.example.otchallenge.api.dto.BookDto
+import com.example.otchallenge.api.dto.BookResponseDto
+import com.example.otchallenge.api.dto.BookResultDto
 import com.example.otchallenge.booklist.BookListPresenter
 import com.example.otchallenge.booklist.BookListUseCase
 import com.example.otchallenge.booklist.BookListView
-import com.example.otchallenge.booklist.uistate.BookUIState
 import com.example.otchallenge.booklist.uistate.BooksContentUIState
 import com.example.otchallenge.booklist.uistate.LoadingState
+import com.example.otchallenge.utils.capitalizeWords
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -59,7 +62,7 @@ class PresenterTest {
     @Test
     fun `should show loading when fetching books`() = runTest {
         // ** Setup the use case
-        whenever(mockUseCase.invoke()).thenReturn(BooksContentUIState.EMPTY.copy(loadingState = LoadingState.Ready))
+        whenever(mockUseCase.invoke()).thenReturn(BookResponseDto.DEFAULT)
         presenter.loadBooks()
 
         val expectedState = BooksContentUIState.EMPTY.copy(loadingState = LoadingState.Loading)
@@ -81,16 +84,25 @@ class PresenterTest {
     @Test
     fun `should show books when fetching books is successful`() = runTest {
         val books = listOf(
-            BookUIState("Title 1", "Ahmad Daneshvar", "Nice book", "https://picsum.photos/200/300", 1),
-            BookUIState("Title 2", "Ahmad Daneshvar", "Nice book2", "https://picsum.photos/200/300", 2),
-            BookUIState("Title 3", "Ahmad Daneshvar", "Nice book3", "https://picsum.photos/200/300", 3),
+            BookDto.DEFAULT.copy(rank = 1, title = "THE ART OF PROGRAMMING"),
+            BookDto.DEFAULT.copy(rank = 2, title = "USMLE Step 1 - First Aid"),
+            BookDto.DEFAULT.copy(rank = 3, title = "Java how to program"),
         )
-        whenever(mockUseCase.invoke()).thenReturn(BooksContentUIState.EMPTY.copy(books))
+
+        whenever(mockUseCase.invoke()).thenReturn(BookResponseDto.DEFAULT.copy(BookResultDto.DEFAULT.copy(books = books)))
         presenter.loadBooks()
 
         advanceUntilIdle()
         assert(presenter.uiState.loadingState is LoadingState.Ready)
-        assert(presenter.uiState.books == books)
+
+        // ** Making sure data is mapped correctly **
+        presenter.uiState.books.forEachIndexed { index, bookUIState ->
+            assert(bookUIState.title == books[index].title.capitalizeWords())
+            assert(bookUIState.description == books[index].description)
+            assert(bookUIState.rank == books[index].rank)
+            assert(bookUIState.author == books[index].contributor)
+            assert(bookUIState.imageUrl == books[index].bookImage)
+        }
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -99,15 +111,15 @@ class PresenterTest {
 
         // ** Try to retry
         val books = listOf(
-            BookUIState("Title 1", "Ahmad Daneshvar", "Nice book", "https://picsum.photos/200/300", 1),
-            BookUIState("Title 2", "Ahmad Daneshvar", "Nice book2", "https://picsum.photos/200/300", 2),
-            BookUIState("Title 3", "Ahmad Daneshvar", "Nice book3", "https://picsum.photos/200/300", 3),
+            BookDto.DEFAULT.copy(rank = 1, title = "THE ART OF PROGRAMMING"),
+            BookDto.DEFAULT.copy(rank = 2, title = "USMLE Step 1 - First Aid"),
+            BookDto.DEFAULT.copy(rank = 3, title = "Java how to program"),
         )
 
         // ** Simulate the error state
         whenever(mockUseCase.invoke())
             .thenThrow(RuntimeException::class.java) // <- ** First call that throws an error
-            .thenReturn(BooksContentUIState.EMPTY.copy(books)) // <- ** Second call that returns the books
+            .thenReturn(BookResponseDto.DEFAULT.copy(BookResultDto.DEFAULT.copy(books = books))) // <- ** Second call that returns the books
 
         presenter.loadBooks()
         advanceUntilIdle()
@@ -117,7 +129,7 @@ class PresenterTest {
         advanceUntilIdle()
 
         assert(presenter.uiState.loadingState is LoadingState.Ready)
-        assert(presenter.uiState.books == books)
+        assert(presenter.uiState.books.size == books.size)
     }
 
 }

@@ -81,7 +81,7 @@ dependencies {
     implementation libs.rx.java
     implementation libs.rx.kotlin
 
-    // Mockito
+    // Mockito, Mock webserver and coroutine tests
     testImplementation libs.mockito.core
     testImplementation libs.mockito.kotlin
     testImplementation libs.mockito.inline

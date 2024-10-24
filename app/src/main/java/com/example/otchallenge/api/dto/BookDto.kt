@@ -11,4 +11,9 @@ data class BookDto(
     @SerializedName("book_image") val bookImage: String,
     @SerializedName("primary_isbn13") val isbn: String,
     val description: String
-)
+) {
+    companion object {
+        val DEFAULT =
+            BookDto(0, "", "", "", "", "", "", "")
+    }
+}
