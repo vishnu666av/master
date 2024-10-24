@@ -12,8 +12,8 @@ class BookListPresenter @Inject constructor(val view: BookListView, val useCase:
     /**
      * State of the UI.
      */
-    private var uiState: BooksContentUIState = BooksContentUIState.EMPTY
-        set(value) {
+    var uiState: BooksContentUIState = BooksContentUIState.EMPTY
+        private set(value) {
             field = value
             view.deliverState(field)
         }

@@ -7,5 +7,6 @@
     <string name="data_fetch_error">Fetch Error</string>
     <string name="try_again">Try Again</string>
     <string name="rank_and_title">#%1$d %2$s</string>
+    <string name="lastUpdate_and_date">Last update: %1$s</string>
     <string name="book_cover">Book Cover</string>
 </resources>
