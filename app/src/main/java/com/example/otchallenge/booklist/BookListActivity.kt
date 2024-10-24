@@ -140,7 +140,7 @@ class BookListActivity : AppCompatActivity(), BookListView {
         }
 
         override fun onLost(network: Network) {
-            Snackbar.make(binding.root, "", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(binding.root, getString(R.string.internet_lost), Snackbar.LENGTH_SHORT).show()
         }
     }
 }

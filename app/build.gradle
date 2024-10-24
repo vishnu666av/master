@@ -5,6 +5,17 @@ plugins {
 }
 
 android {
+//   ⬇️ ** ⚠️ NOTICE: Only for release confirmation, for interview reference. Shouldn't be in real world project!
+    signingConfigs {
+        release {
+            storeFile file('../keystore/Release.jks')
+            storePassword '123456'
+            keyAlias 'opentable_interview'
+            keyPassword '123456'
+        }
+    }
+//    ⬆️ ** END OF NOTICE
+
     namespace 'com.example.otchallenge'
     compileSdk 34
 
@@ -20,8 +31,9 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
