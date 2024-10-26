@@ -11,10 +11,17 @@ activity = "1.9.0"
 constraintlayout = "2.1.4"
 dagger = "2.51.1"
 retrofit = "2.11.0"
+gson-converter= "2.9.0"
 glide = "4.16.0"
 rx-android = "2.1.1"
 rx-java = "2.2.21"
 rx-kotlin = "2.4.0"
+navigation = "2.8.3"
+databinding = "8.4.2"
+fragment = "1.4.0"
+mockito-core = "5.0.0"
+mockito-kotlin = "5.0.0"
+mockwebserver = "4.9.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -29,10 +36,19 @@ dagger = { group = "com.google.dagger", name = "dagger", version.ref = "dagger" 
 dagger-compiler = { group = "com.google.dagger", name = "dagger-compiler", version.ref = "dagger" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-rx-adapter = { group = "com.squareup.retrofit2", name = "adapter-rxjava2", version.ref = "retrofit" }
+retrofit-gson-converter = {group= "com.squareup.retrofit2", name= "converter-gson", version.ref="gson-converter"}
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 rx-java = {group = "io.reactivex.rxjava2", name="rxjava", version.ref = "rx-java"}
 rx-android = {group = "io.reactivex.rxjava2", name="rxandroid", version.ref = "rx-android"}
 rx-kotlin = {group = "io.reactivex.rxjava2", name="rxkotlin", version.ref = "rx-kotlin"}
+navigation-fragment = {group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref =  "navigation"}
+navigation-ui = {group = "androidx.navigation", name = "navigation-ui-ktx", version.ref =  "navigation"}
+databinding = {group = "androidx.databinding", name = "databinding-runtime", version.ref = "databinding"}
+fragment = {group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragment"}
+mockito-core = {group = "org.mockito", name = "mockito-core", version.ref = "mockito-core"}
+mockito-inline = {group = "org.mockito", name = "mockito-inline", version.ref = "mockito-core"}
+mockito-kotlin = {group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockito-kotlin"}
+mockwebserver = {group = "com.squareup.okhttp3", name = "mockwebserver", version.ref = "mockwebserver"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
