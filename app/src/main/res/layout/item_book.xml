@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="book"
+            type="com.example.otchallenge.model.Book" />
+    </data>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:focusable="false"
+    android:focusableInTouchMode="false"
+    >
+
+    <ImageView
+        android:id="@+id/ivBookImg"
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        android:contentDescription="@string/book_image"
+        android:scaleType="centerCrop"
+        app:imageUrl="@{book.book_image}"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars"/>
+
+    <TextView
+        android:id="@+id/tvBookRank"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textStyle="bold|italic"
+        android:textSize="24sp"
+        android:text="@{String.valueOf(book.rank)}"
+        app:layout_constraintStart_toEndOf="@id/ivBookImg"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        tools:text="#1"/>
+
+    <TextView
+        android:id="@+id/tvBookTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:text="@{book.title}"
+        app:layout_constraintStart_toEndOf="@id/ivBookImg"
+        app:layout_constraintTop_toBottomOf="@id/tvBookRank"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        tools:text="Counting Miracles"/>
+
+
+    <TextView
+        android:id="@+id/tvBookAuthor"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@android:color/darker_gray"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textStyle="italic"
+        android:text="@{book.author}"
+        app:layout_constraintStart_toEndOf="@id/ivBookImg"
+        app:layout_constraintTop_toBottomOf="@id/tvBookTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        tools:text="by Nicholas Spark"/>
+
+    <TextView
+        android:id="@+id/tvBookDesc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:maxLines="3"
+        android:ellipsize="end"
+        android:text="@{book.description}"
+        app:layout_constraintStart_toEndOf="@id/ivBookImg"
+        app:layout_constraintTop_toBottomOf="@id/tvBookAuthor"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingTop="8dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        tools:text="A man in search of the father he never knew encounters a single mom..."/>
+
+    
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

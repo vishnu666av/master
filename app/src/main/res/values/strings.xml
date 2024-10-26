@@ -1,3 +1,8 @@
 <resources>
 	<string name="app_name">AndroidOTChallenge</string>
+	<string name="book_image">Book Image</string>
+	<string name="no_internet_connection_please_try_later">No internet connection. Please try later</string>
+	<string name="try_again">Try Again</string>
+	<string name="toolbar_title">Hardcover Fiction</string>
+	<string name="toolbar_subtitle">New York Times</string>
 </resources>
